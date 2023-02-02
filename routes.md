@@ -1,74 +1,35 @@
-# Routes (REST / BREAD)
-
-## Browse (Index):
-
-1. GET /items
-2. GET /sellers
-3. GET /admins
-
-## Read (Show):
-
-1. GET /items/{id}
-2. GET /sellers/{id}
-3. GET /admins/{id}
-
-## Edit (Update):
-
-1. PUT /items/{id}
-2. PUT /sellers/{id}
-3. PUT /admins/{id}
-
-## Add (Create):
-
-1. POST /items
-2. POST /sellers
-3. POST /admins
-4. POST /users/{id}/favourites
-
-## Delete:
-
-1. DELETE /items/{id}
-2. DELETE /sellers/{id}
-3. DELETE /admins/{id}
-4. DELETE /users/{id}/favourites/{item_id}
-
 # Routes (GET/POST)
 
 ## Browse (Index):
 
 1. GET /items
-2. GET /sellers
-3. GET /admins
-4. GET /favourites
+2. GET /items (filtered by price)
+3. GET /favourites (view your favourites)
+4. GET /messages (view your messages)
+5. GET /admin (view your items)
 
 ## Read (Show):
 
 1. GET /items/{id}
-2. GET /sellers/{id}
-3. GET /admins/{id}
-4. GET /favourites/{id}
+2. Product page
+   2.1. GET item/id ()
+3. Messages
+   3.1 GET /messages (list of messages by product by other user)
+   3.2 GET /messages/:product_id/:user_id (other side of the msg)
 
 ## Edit (Update):
 
-1. POST /items/{id}
-2. POST /sellers/{id}
-3. POST /admins/{id}
+1. GET /items/:id/edit
+2. POST /items/:id
 
 ## Add (Create):
 
-1. POST /items
-2. POST /sellers
-3. POST /admins
-4. POST /favourites
+1. GET /items/new + POST /items
+2. POST /favourites (inside GET /items + /items/:id)
+3. GET /items/:id/new POST /items/:id/message (re to Read 2.1)
+4. GET /messages/:product_id/:user_id/new POST /messages/:product_id/:user_id (re to Read 3.2)
 
 ## Delete:
 
 1. POST /items/{id}/delete
-2. POST /sellers/{id}/delete
-3. POST /admins/{id}/delete
-
-## User Favourites:
-
-1. GET /favourites
-2. POST /favourites/{id}/add
-3. POST /favourites/{id}/remove
+2. POST /favourites/{id}/remove
