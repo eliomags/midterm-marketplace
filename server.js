@@ -11,6 +11,7 @@ const app = express();
 
 app.set('view engine', 'ejs');
 
+
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
 //         The :status token will be colored red for server error codes, yellow for client error codes, cyan for redirection codes, and uncolored for all other codes.
@@ -31,13 +32,16 @@ app.use(express.static('public'));
 const userApiRoutes = require('./routes/users-api');
 const widgetApiRoutes = require('./routes/widgets-api');
 const usersRoutes = require('./routes/users');
-
+const itemsRoutes = require('./routes/items');
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
 // Note: Endpoints that return data (eg. JSON) usually start with `/api`
 app.use('/api/users', userApiRoutes);
 app.use('/api/widgets', widgetApiRoutes);
 app.use('/users', usersRoutes);
+app.use('/items', itemsRoutes);
+app.use('/messages', messagesRoutes);
+
 // Note: mount other resources here, using the same pattern above
 
 // Home page
@@ -47,6 +51,12 @@ app.use('/users', usersRoutes);
 app.get('/', (req, res) => {
   res.render('index');
 });
+
+app.get("/test", (req, res) => {
+  // console.log(db);
+  const result = db.query('SELECT * FROM users;').then((data) => console.log(data))
+  res.send("ok");
+})
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
