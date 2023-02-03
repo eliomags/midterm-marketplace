@@ -1,23 +1,21 @@
-
-nav{
+nav {
   background: indigo;
-  height:100px ;
-a{
-  color:white;
+  height: 100px;
 }
-  .username {
-    width: 300px;
-    margin: 1em;
-  }
-.navbar_right {
+nav a {
+  color: white;
+}
+nav .username {
+  width: 300px;
+  margin: 1em;
+}
+nav .navbar_right {
   width: 60%;
   display: flex;
   justify-content: space-between;
 }
-}
 
-
- body main {
+body main {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -25,8 +23,9 @@ a{
   min-height: 100vh;
   background: white;
   padding-top: 2rem;
-
-  .search-button{
-    margin-left: 1em
-  }
 }
+body main .search-button {
+  margin-left: 1em;
+}
+
+/*# sourceMappingURL=main.css.map */
