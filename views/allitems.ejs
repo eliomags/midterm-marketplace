@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>All Items</title>
+  </head>
+  <body>
+    <h1>All Items</h1>
+    <ul>
+      <% items.forEach(item => { %>
+        <li>
+          <%= item.name %> - <%= item.price %>
+        </li>
+      <% }) %>
+    </ul>
+  </body>
+</html>

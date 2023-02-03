@@ -1,0 +1,17 @@
+<h1>Admin Page</h1>
+<table>
+  <thead>
+    <tr>
+      <th>Item Name</th>
+      <th>Price</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% items.forEach(function(item) { %>
+    <tr>
+      <td><%= item.name %></td>
+      <td><%= item.price %></td>
+    </tr>
+    <% }); %>
+  </tbody>
+</table>
