@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Marketplace | Filtered Items</title>
+</head>
+<body>
+  <h1>Filtered Items by Price</h1>
+  <% items.forEach(item => { %>
+    <% if (item.price >= lowerBound && item.price <= upperBound) { %>
+      <div class="item">
+        <h3><%= item.name %></h3>
+        <p>Price: $<%= item.price %></p>
+        <p>Description: <%= item.description %></p>
+      </div>
+    <% } %>
+  <% }) %>
+</body>
+</html>
