@@ -1,185 +1,189 @@
 const express = require("express");
 const app = express();
 
-// Index: Browse
-app.get("/items", (req, res) => {
-  const query = queries.SELECT_ALL_ITEMS;
-  pool.query(query, (error, result) => {
-    if (error) {
-      res.status(500).send({ error: error.message });
-    } else {
-      res.render("allitems", { items: result.rows });
-    }
-  });
+// request for viewing items split into featured and rest (Zack's crazy addition on Saturday)
+app.get("/", (req, res) => {
+  let options = {};
+  if (req.query.min_price) {
+    options.min_price = req.query.min_price;
+  }
+  if (req.query.max_price) {
+    options.max_price = req.query.max_price;
+  }
+  Promise.all([getFeaturedItems(), getAllItems(6, options)])
+    .then(([featuredItems, allItems]) => {
+      res.render("items", { featuredItems, allItems });
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).json({ error: error.message });
+    });
 });
 
-app.get("/items", (req, res) => {
-  // Code to handle request for filtered items by price
-  const query = queries.SELECT_FILTERED_BY_PRICE_ITEMS;
-  const priceRange = req.query.priceRange;
-  pool.query(query, [priceRange], (error, result) => {
-    if (error) {
-      res.status(500).send({ error: error.message });
-    } else {
-      res.render("filtereditems", { items: result.rows });
-    }
-  });
-});
-
-app.get("/favourites", (req, res) => {
-  // Code to handle request for viewing favourites
-  const userId = req.session.userId;
-  const query = queries.SELECT_FAVORITES_BY_USER_ID;
-  // Query the database to get the favorites for the current user
-  db.query(query, [userId], (error, result) => {
-    if (error) {
-      return res.status(500).send({ error: error.message });
-    }
-
-    // Render the favorites view and pass the result to it
-    res.render("favourites", { favorites: result.rows });
-  });
-});
-
-app.get("/messages", (req, res) => {
-  // Code to handle request for viewing messages
-  const userId = req.session.userId;
-  const query = queries.SELECT_MESSAGES_BY_USER_ID;
-  if (!userId) {
-    res.redirect("/login");
-    return;
+/*
+// request for viewing all items with option to filter by price
+app.get("/", (req, res) => {
+  let options = {};
+  if (req.query.min_price) {
+    options.min_price = req.query.min_price;
+  }
+  if (req.query.max_price) {
+    options.max_price = req.query.max_price;
   }
 
-  pool.query(query, [userId], (err, result) => {
-    if (err) {
-      console.error(err);
-      res.status(500).send("Error fetching messages");
-      return;
-    }
-
-    const messages = result.rows;
-    res.render("messages", { messages });
-  });
+  getAllItems(6, options)
+    .then((items) => {
+      res.render("items", { items: items.rows });
+    })
+    .catch((error) => {
+      console.log(error);
+      res.send("Error");
+    });
 });
 
-app.get("/admin", (req, res) => {
-  // Code to handle request for viewing current user's items
+// request for viewing featured items
+app.get("/featured", (req, res) => {
+  getFeaturedItems()
+    .then((featured) => {
+      res.render("featured", { featured: featured.rows });
+    })
+    .catch((error) => {
+      res.send("Error");
+    });
+});
+*/
+
+// request for viewing favourites
+router.get("/favorites/:userId", (req, res) => {
+  const userId = req.params.userId;
+
+  getUserFavorites(userId)
+    .then((favorites) => {
+      res.render("favorites", { favorites: favorites.rows });
+    })
+    .catch((error) => {
+      res.status(500).json({ error: error.message });
+    });
+});
+
+// request for viewing messages
+app.get("/user-messages/:userId", (req, res) => {
+  const userId = req.params.userId;
+
+  getUserMessages(userId)
+    .then((messages) => {
+      res.render("user-messages", { messages: messages.rows });
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).json({ error: error.message });
+    });
+});
+
+// Code to handle request for viewing current user's items
+app.get("/admin-listings", (req, res) => {
   const userId = req.session.userId;
-  const query = queries.SELECT_ITEMS_BY_USER_ID;
-  pool.query(query, [userId], (error, result) => {
-    if (error) {
-      res.status(500).send({ error: error.message });
-    } else {
-      res.render("admin", { items: result.rows });
-    }
-  });
+  getAdminListings(userId)
+    .then((listings) => {
+      res.render("admin-listings", { listings: listings.rows });
+    })
+    .catch((error) => {
+      console.log(error);
+      res.send("Error");
+    });
 });
 
 // Show: Read
+
+//request for a specific item by id
 app.get("/items/:id", (req, res) => {
-  // Code to handle request for a specific item by id
   const itemId = req.params.id;
-  const query = queries.SELECT_ITEM_BY_ID;
-
-  pool.query(query, [itemId], (err, result) => {
-    if (err) {
-      return res.status(500).send(err);
-    }
-
-    if (result.rows.length === 0) {
-      return res.status(404).send({ error: "Item not found" });
-    }
-
-    const item = result.rows[0];
-    res.render("item", { item });
-  });
+  getItemById(itemIdd)
+    .then((item) => {
+      res.render("item-details", { item: item.rows });
+    })
+    .catch((error) => {
+      console.log(error);
+      res.send("Error");
+    });
 });
 
-app.get("/messages", (req, res) => {
-  // Code to handle request for viewing messages
-  const userId = req.session.userId;
-  const query = queries.SELECT_MESSAGES_BY_USER_ID_GROUPED_BY_PRODUCT_ID;
-  if (!userId) {
-    res.redirect("/login");
-    return;
-  }
-  pool.query(query, [userId, itemId], (err, result) => {
-    if (err) {
-      console.error(err);
-      res.status(500).send("Error fetching messages");
-      return;
-    }
+// request for a specific message by product_id and user_i (buyer)
+app.get("/conversation", (req, res) => {
+  const senderId = req.query.senderId;
+  const receiverId = req.query.receiverId;
+  const listingId = req.query.listingId;
 
-    const messages = result.rows;
-    res.render("messages", { messages });
-  });
-});
-
-app.get("/messages/:product_id/:user_id", (req, res) => {
-  // Code to handle request for a specific message by product_id and user_i (buyer)
-  const productId = req.params.product_id;
-  const userId = req.params.user_id;
-  const query = querries.SELECT_MESSAGES_BY_PRODUCT_ID_AND_USER_ID;
-
-  pool.query(query, [productId, userId], (error, result) => {
-    if (error) {
-      return res.status(500).send({ error: error.message });
-    }
-    res.render("messages", { messages: result.rows });
-  });
+  getConversation(senderId, receiverId, listingId)
+    .then((conversation) => {
+      res.render("conversation", { conversation });
+    })
+    .catch((error) => {
+      console.log(error);
+      res.send("Error");
+    });
 });
 
 // Update: Edit
-app.get("/items/:id/edit", (req, res) => {
-  // Code to handle request for editing a specific item by id
-  const itemId = req.params.id;
-  const query = queries.SELECT_ITEM_BY_ID;
 
-  pool.query(query, [itemId], (err, result) => {
-    if (err) {
-      return res.status(500).send(err);
-    }
-    res.render("edititem", { item: result.rows[0] });
-  });
+// Code to handle request for editing a specific item by id
+app.get("/items/:id/edit", (req, res) => {
+  getItemById(req.params.id)
+    .then((item) => {
+      res.render("edit-item", { item });
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).json({ error: error.message });
+    });
 });
 
 app.post("/items/:id", (req, res) => {
-  // Code to handle request for updating a specific item by id
-  const itemId = req.params.id;
-  const { name, description, price } = req.body;
-  const query = queries.UPDATE_ITEM_BY_ID;
+  const id = req.params.id;
+  const options = {
+    title: req.body.title,
+    description: req.body.description,
+    photo_1: req.body.photo_1,
+    photo_2: req.body.photo_2,
+    photo_3: req.body.photo_3,
+    photo_4: req.body.photo_4,
+    price: req.body.price,
+    sold_status: req.body.sold_status,
+  };
 
-  pool.query(query, [name, description, price, itemId], (err, result) => {
-    if (err) {
-      return res.status(500).send(err);
-    }
-    res.redirect("/items/:id");
-  });
+  editItem(id, options)
+    .then(() => {
+      res.redirect(`/items/${id}`);
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).json({ error: error.message });
+    });
 });
 
 // Create: Add
+// get request for creating a new item
 app.get("/items/new", (req, res) => {
-  // Code to handle request for creating a new item
   res.render("newitem");
 });
 
+// post request for adding a new item
 app.post("/items", (req, res) => {
-  // Code to handle request for adding a new item
-  const { name, description, price } = req.body;
-  const query = queries.INSERT_ITEM;
-
-  pool.query(query, [name, description, price], (err, result) => {
-    if (err) {
-      return res.status(500).send(err);
-    }
-    res.redirect("/items");
-  });
+  let item = req.body;
+  addListing(item)
+    .then(() => {
+      res.redirect("/");
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).json({ error: error.message });
+    });
 });
 
 app.post("/favourites", (req, res) => {
   // Code to handle request for adding a favourite inside GET /items + /items/:id
   const { productId, userId } = req.body;
-  const query = queries.INSERT_FAVOURITE;
+  const query = queries.addFavourite;
 
   pool.query(query, [productId, userId], (err, result) => {
     if (err) {
@@ -189,33 +193,68 @@ app.post("/favourites", (req, res) => {
   });
 });
 
-app.get("/messages/:product_id/:user_id/new", (req, res) => {
-  // Code to handle request for creating a new message
-  const productId = req.params.product_id;
-  const userId = req.params.user_id;
-  res.render("newmessage", { productId, userId });
+app.post("/favourites", (req, res) => {
+  let favourite = {
+    user_id: req.body.user_id,
+    listing_id: req.body.listing_id,
+  };
+  addFavourite(favourite)
+    .then((result) => {
+      res.status(200).json({ result });
+      res.redirect(`/items/${favourite.listing_id}`);
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).json({ error: error.message });
+    });
 });
 
-app.post("/messages/:product_id/:user_id", (req, res) => {
-  // Code to handle request for adding a new message
-  const productId = req.params.product_id;
-  const userId = req.params.user_id;
-  const { text } = req.body;
-  const query = queries.INSERT_MESSAGE;
+// request for creating a new message
+app.get("/messages/:item_id/:user_id/new", (req, res) => {
+  const item_id = req.params.listing_id;
+  const user_id = req.params.user_id;
+  res.render("newmessage", { item_id, user_id });
+});
 
-  pool.query(query, [productId, userId, text], (err, result) => {
-    if (err) {
-      return res.status(500).send(err);
-    }
-    res.redirect(`:product_id/:user_id`);
-  });
+// request for adding a new message
+app.post("/messages/:item_id/:user_id", (req, res) => {
+  let message = {
+    sender: req.body.sender,
+    receiver: req.body.receiver,
+    listing: req.body.listing,
+    text: req.body.text,
+  };
+  createMessage(message)
+    .then((result) => {
+      res.status(200).json({ result });
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).json({ error: error.message });
+    });
+});
+
+// request to edit Sold Status,
+app.post("/items/:id", (req, res) => {
+  let listing = {
+    id: req.params.id,
+    sold_status: req.body.sold_status,
+  };
+  editSoldStatus(listing)
+    .then((result) => {
+      res.status(200).json({ result });
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).json({ error: error.message });
+    });
 });
 
 // Delete
 app.post("/items/:id/delete", (req, res) => {
   // Code to handle request for deleting a specific item by id
   const itemId = req.params.id;
-  const query = queries.DELETE_ITEM_BY_ID;
+  const query = queries.deleteListing;
   pool.query(query, [itemId], (err, result) => {
     if (err) {
       return res.status(500).send(err);
@@ -227,7 +266,7 @@ app.post("/items/:id/delete", (req, res) => {
 app.post("/favourites/:id/remove", (req, res) => {
   // Code to handle request for removing a favourite by id
   const favouriteId = req.params.id;
-  const query = queries.DELETE_FAVOURITE_BY_ID;
+  const query = queries.deleteFavourite;
   pool.query(query, [itemId], (err, result) => {
     if (err) {
       return res.status(500).send(err);
@@ -239,3 +278,5 @@ app.post("/favourites/:id/remove", (req, res) => {
 app.listen(3000, () => {
   console.log("Marketplace app listening on port 3000!");
 });
+
+module.exports = router;
