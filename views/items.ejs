@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
+  <title>AllItemst</title>
+</head>
+<body>
+  <%- include('partials/_header') %>
+      <div class="container mt-5">
+        <div class="row">
+          <h2 class="col-12 text-center mb-3">Featured Items</h2>
+    <% for (let i = 0; i < featuredItems.length; i++) { %>
+      <div class="col-md-4 mb-3">
+        <div class="card">
+          <i class="fa fa-heart-o" aria-hidden="true" data-id="<%= featuredItems[i].id %>" onclick="toggleFavourite(this)"></i>
+          <img src="<%= featuredItems[i].photo_1 %>" alt="product thumbnail">
+          <div class="card-body">
+            <h5 class="card-title"><%= featuredItems[i].name %></h5>
+            <p class="card-text">$<%= featuredItems[i].price %></p>
+            <p class="card-text"><%= featuredItems[i].description %></p>
+            <i class="fa fa-heart-o" aria-hidden="true" onclick="toggleFavourite(this)"></i>
+          </div>
+        </div>
+      </div>
+      <% } %>
+    </div>
+    <div class="row">
+      <h2 class="col-12 text-center mb-3">All Items</h2>
+      <% for (let i = 0; i < allItems.length; i++) { %>
+        <div class="col-md-4 mb-3">
+          <div class="card">
+            <i class="fa fa-heart-o" aria-hidden="true" data-id="<%= allItems[i].id %>" onclick="toggleFavourite(this)"></i>
+            <img src="<%= allItems[i].thumbnail %>" alt="product thumbnail">
+            <div class="card-body">
+              <h5 class="card-title"><%= allItems[i].name %></h5>
+              <p class="card-text">$<%= allItems[i].price %></p>
+              <p class="card-text"><%= allItems[i].description %></p>
+              <i class="fa fa-heart-o" aria-hidden="true" onclick="toggleFavourite(this)"></i>
+            </div>
+        </div>
+      </div>
+      <% } %>
+    </div>
+  </div>
+  <script src="../public/scripts/app.js"></script>
+</body>
+
+</html>
