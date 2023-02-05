@@ -122,9 +122,10 @@ const getConversation = function(senderId, receiverId, listingId) {
     JOIN users AS sender ON user_messages.sender = sender.id
     JOIN users AS receiver ON user_messages.receiver = receiver.id
     JOIN listings ON user_messages.listing = listings.id
-    WHERE sender.id = $1
-    AND receiver.id = $2
-    AND listings.id = $3;
+    WHERE (sender.id = $1 AND receiver.id = $2)
+    OR (sender.id = $2 AND receiver.id = $1)
+    AND listings.id = $3
+    ORDER BY user_messages.time_sent DESC;
     `;
 
   return db.query(queryString, queryParams)
@@ -231,6 +232,83 @@ const deleteFavourite = function(favourite) {
     })
 };
 
+const getItemById = function (item) {
+  const queryParams = [item.id];
+  let queryString = `
+    SELECT listings.*
+    FROM listings
+    WHERE listings.id = $1
+    ;`;
+
+  return db.query(queryString, queryParams)
+    .then((response) => {
+      return response.rows;
+    })
+    .catch((error) => {
+      console.log(error);
+    })
+};
+
+const editItem = function(id, options) {
+  const queryParams = [];
+  let queryString = `
+    UPDATE listings
+    SET
+    `;
+
+  if (options.title) {
+    queryParams.push(options.title);
+    queryString += `title = $${queryParams.length}, `;
+  }
+
+  if (options.description) {
+    queryParams.push(options.description);
+    queryString += `description = $${queryParams.length}, `;
+  }
+
+  if (options.photo_1) {
+    queryParams.push(option.photo_1)
+    queryString += `photo_1 = $${queryParams.length}, `;
+  }
+
+  if (options.photo_2) {
+    queryParams.push(option.photo_2)
+    queryString += `photo_2 = $${queryParams.length}, `;
+  }
+
+  if (options.photo_3) {
+    queryParams.push(option.photo_3)
+    queryString += `photo_3 = $${queryParams.length}, `;
+  }
+
+  if (options.photo_4) {
+    queryParams.push(option.photo_4)
+    queryString += `photo_4 = $${queryParams.length}, `;
+  }
+
+  if (options.price) {
+    queryParams.push(options.price);
+    queryString += `price = $${queryParams.length}, `;
+  }
+
+  if (options.sold_status) {
+    queryParams.push(options.sold_status);
+    queryString += `sold_status = $${queryParams.length}, `;
+  }
+
+  queryParams.push(id);
+  queryString = queryString.slice(0, -2) + `
+    WHERE id = $${queryParams.length}
+  `;
+
+  return db.query(queryString, queryParams)
+    .then((response) => {
+      return response.rows;
+    })
+    .catch((error) => {
+      console.log(error);
+    })
+};
 
 module.exports = {
   getUsers,
@@ -245,7 +323,9 @@ module.exports = {
   createMessage,
   editSoldStatus,
   deleteListing,
-  deleteFavourite
+  deleteFavourite,
+  getItemById,
+  editItem
  };
 
 
