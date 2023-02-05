@@ -1,23 +1,25 @@
-
-nav{
+nav {
   background: indigo;
-  height:100px ;
-a{
-  color:white;
-}
+  height: 100px;
+  a {
+    color: white;
+  }
   .username {
     width: 300px;
     margin: 1em;
   }
-.navbar_right {
-  width: 60%;
-  display: flex;
-  justify-content: space-between;
-}
+  .navbar-right {
+    width: 60%;
+    display: flex;
+    justify-content: space-between;
+  }
+  .logo{
+margin-right: 5em;
+margin-left: 2em;
+  }
 }
 
-
- body main {
+body main {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -26,7 +28,7 @@ a{
   background: white;
   padding-top: 2rem;
 
-  .search-button{
-    margin-left: 1em
+  .search-button {
+    margin-left: 1em;
   }
 }

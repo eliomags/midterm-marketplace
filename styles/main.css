@@ -9,10 +9,14 @@ nav .username {
   width: 300px;
   margin: 1em;
 }
-nav .navbar_right {
+nav .navbar-right {
   width: 60%;
   display: flex;
   justify-content: space-between;
+}
+nav .logo {
+  margin-right: 5em;
+  margin-left: 2em;
 }
 
 body main {
