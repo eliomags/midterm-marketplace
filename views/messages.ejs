@@ -1,0 +1,22 @@
+<html>
+  <head>
+    <title>Messages</title>
+  </head>
+  <body>
+    <h1>Messages</h1>
+    <table>
+      <tr>
+        <th>Product ID</th>
+        <th>User ID</th>
+        <th>Message</th>
+      </tr>
+      <% messages.forEach(function(message) { %>
+        <tr>
+          <td><%= message.product_id %></td>
+          <td><%= message.user_id %></td>
+          <td><%= message.text %></td>
+        </tr>
+      <% }); %>
+    </table>
+  </body>
+</html>
