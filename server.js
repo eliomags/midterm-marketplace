@@ -5,11 +5,16 @@ require("dotenv").config();
 const sassMiddleware = require("./lib/sass-middleware");
 const express = require("express");
 const morgan = require("morgan");
+const path = require("path");
 
 const PORT = process.env.PORT || 8080;
 const app = express();
 
+// Set the view engine to ejs
 app.set("view engine", "ejs");
+
+// Serve the ejs files from a "views" folder
+app.set("views", path.join(__dirname, "views"));
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
@@ -32,9 +37,9 @@ const userApiRoutes = require("./routes/users-api");
 const widgetApiRoutes = require("./routes/widgets-api");
 const usersRoutes = require("./routes/users");
 const itemsRoutes = require("./routes/items");
-const favoritesRoutes = require("./routes/favorites");
-const messagesRoutes = require("./routes/messages");
-const adminRoutes = require("./routes/admin");
+// const favoritesRoutes = require("./routes/favorites");
+// const messagesRoutes = require("./routes/messages");
+// const adminRoutes = require("./routes/admin");
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
@@ -44,9 +49,9 @@ app.use("/api/widgets", widgetApiRoutes);
 app.use("/users", usersRoutes);
 // Note: mount other resources here, using the same pattern above
 app.use("/items", itemsRoutes);
-app.use("/favorites", favoritesRoutes);
-app.use("/messages", messagesRoutes);
-app.use("/admin", adminRoutes);
+// app.use("/favorites", favoritesRoutes);
+// app.use("/messages", messagesRoutes);
+// app.use("/admin", adminRoutes);
 
 // Home page
 // Warning: avoid creating more routes in this file!

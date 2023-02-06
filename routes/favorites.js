@@ -7,7 +7,7 @@ const {
 } = require("../db/queries/users");
 
 // request for viewing user favourites
-app.get("/favorites", (req, res) => {
+router.get("/favorites", (req, res) => {
   const userId = req.session.user_id;
 
   getUserFavorites(userId)
@@ -20,7 +20,7 @@ app.get("/favorites", (req, res) => {
 });
 
 // Code to handle request for adding a favourite inside GET /items + /items/:id
-app.post("/favourites", (req, res) => {
+router.post("/favourites", (req, res) => {
   let favourite = {
     user_id: req.body.user_id,
     listing_id: req.body.listing_id,
@@ -38,7 +38,7 @@ app.post("/favourites", (req, res) => {
 
 // request for removing a favourite by id
 //option via Delete
-app.delete("/favorites/:id", (req, res) => {
+router.delete("/favorites/:id", (req, res) => {
   const favourite = { id: req.params.id };
   deleteFavourite(favourite)
     .then((response) => {
@@ -51,7 +51,7 @@ app.delete("/favorites/:id", (req, res) => {
 });
 
 //options via post request
-app.post("/favorites/:id/remove", (req, res) => {
+router.post("/favorites/:id/remove", (req, res) => {
   const favourite = { id: req.params.id };
   deleteFavourite(favourite)
     .then((response) => {

@@ -7,7 +7,7 @@ const {
 } = require("../db/queries/users");
 
 // request for viewing messages
-app.get("/messages", (req, res) => {
+router.get("/messages", (req, res) => {
   const userId = req.params.userId;
 
   getUserMessages(userId)
@@ -21,7 +21,7 @@ app.get("/messages", (req, res) => {
 });
 
 // request for a specific message by product_id and user_i (buyer)
-app.get("/messages/:listing_id/:user_id", (req, res) => {
+router.get("/messages/:listing_id/:user_id", (req, res) => {
   const senderId = req.query.senderId;
   const receiverId = req.query.receiverId;
   const listingId = req.query.listingId;
@@ -37,14 +37,14 @@ app.get("/messages/:listing_id/:user_id", (req, res) => {
 });
 
 // request for creating a new message
-app.get("/messages/:listing_id/:user_id/new", (req, res) => {
+router.get("/messages/:listing_id/:user_id/new", (req, res) => {
   const item_id = req.params.listing_id;
   const user_id = req.params.user_id;
   res.render("newmessage", { item_id, user_id });
 });
 
 // request for adding a new message
-app.post("/messages/:item_id/:user_id", (req, res) => {
+router.post("/messages/:item_id/:user_id", (req, res) => {
   let message = {
     sender: req.body.sender,
     receiver: req.body.receiver,
