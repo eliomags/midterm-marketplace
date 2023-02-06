@@ -10,7 +10,7 @@ const {
 } = require("../db/queries/users");
 
 // Code to handle request for editing a specific item by id
-app.get("/items/:id/edit", (req, res) => {
+router.get("/items/:id/edit", (req, res) => {
   getItemById(req.params.id)
     .then((item) => {
       res.render("edititem", { item });
@@ -21,7 +21,7 @@ app.get("/items/:id/edit", (req, res) => {
     });
 });
 
-app.post("/items/:id", (req, res) => {
+router.post("/items/:id", (req, res) => {
   const id = req.params.id;
   const options = {
     title: req.body.title,
@@ -46,12 +46,12 @@ app.post("/items/:id", (req, res) => {
 
 // Create: Add
 // get request for creating a new item
-app.get("/items/new", (req, res) => {
+router.get("/items/new", (req, res) => {
   res.render("newitem");
 });
 
 // post request for adding a new item
-app.post("/items", (req, res) => {
+router.post("/items", (req, res) => {
   let item = req.body;
   addListing(item)
     .then(() => {
@@ -64,7 +64,7 @@ app.post("/items", (req, res) => {
 });
 
 // request to edit Sold Status,
-app.post("/items/:id", (req, res) => {
+router.post("/items/:id", (req, res) => {
   let listing = {
     id: req.params.id,
     sold_status: req.body.sold_status,
@@ -80,7 +80,7 @@ app.post("/items/:id", (req, res) => {
 });
 
 // request for viewing current user's items
-app.get("/admin", (req, res) => {
+router.get("/admin", (req, res) => {
   const userId = req.session.user_id;
   getAdminListings(userId)
     .then((listings) => {
@@ -95,7 +95,7 @@ app.get("/admin", (req, res) => {
 // Delete
 // request for deleting a specific item by id
 //option via Delete
-app.delete("/items/:id", (req, res) => {
+router.delete("/items/:id", (req, res) => {
   const listing = { id: req.params.id };
   deleteListing(listing)
     .then((response) => {
@@ -107,7 +107,7 @@ app.delete("/items/:id", (req, res) => {
     });
 });
 //options via post request
-app.post("/items/:id/delete", (req, res) => {
+router.post("/items/:id/delete", (req, res) => {
   const listing = { id: req.params.id };
   deleteListing(listing)
     .then((response) => {
