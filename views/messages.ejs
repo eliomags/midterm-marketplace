@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>Home Page</title>
-
-    <meta charset="UTF-8">
+<head>
+  <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
@@ -27,13 +25,56 @@
   <!-- For Font Awesome 5 (Free version) -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
 
-  </head>
-
-
-  <body>
-    <%- include('partials/_header') %>
-    <main>
-      <h1>Happy shopping!</h1>
-    </main>
-  </body>
+  <style>
+    .heart-icon {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      font-size: 18px;
+      cursor: pointer;
+      margin-right: 5%;
+    }
+    .heart-icon .fas {
+      color: lightgray;
+    }
+    .heart-icon.favorited .fas {
+      color: red;
+    }
+    img.img-items {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+    .card {
+      width: 80%;
+      height: 150px;
+      margin: 20px auto;
+    }
+    .card-body {
+      height: 150px;
+      overflow: hidden;
+    }
+    .card-text {
+      font-size: 0.8em;
+    }
+</style>
+</head>
+<body>
+  <%- include('partials/_header') %>
+<div class="container mt-5">
+  <h2 class="text-center mb-3">Messages</h2>
+  <% if (messages.length === 0) { %>
+    <p class="text-center">No messages found.</p>
+  <% } else { %>
+    <% for (let i = 0; i < messages.length; i++) { %>
+      <div class="card" onclick="window.location='/messages/'">
+        <div class="card-body">
+          <h5 class="card-title">Item: <%= messages[i].title %></h5>
+          <p class="card-text">Other User: <%= messages[i].sender_name %></p>
+        </div>
+      </div>
+    <% } %>
+  <% } %>
+</div>
+<body>
 </html>

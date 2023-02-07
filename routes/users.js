@@ -7,9 +7,22 @@
 
 const express = require('express');
 const router  = express.Router();
+const db = require('../db/queries/users');
 
-router.get('/', (req, res) => {
-  res.render('users');
-}); 
+// router.get('/', (req, res) => {
+//   res.render('users');
+// });
+
+
+module.exports = (db) => {
+  router.get('/', (req, res) => {
+    const result = db.query('SELECT * FROM users;')
+    console.log(result, 'RESULT')
+    console.log('userroutes')
+    res.render('users');
+  })
+  return router;
+}
+
 
 module.exports = router;

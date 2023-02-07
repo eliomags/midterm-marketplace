@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
+  <title>AllItemst</title>
+
+  <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" />
+  <link rel="stylesheet" href="/vendor/border-box.css" />
+  <link rel="stylesheet" href="/styles/main.css" />
+  <link rel="stylesheet" href="/styles/layout.css" />
+  <!-- Bootstrap CSS -->
+  <link
+    rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+    integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+    crossorigin="anonymous"
+  />
+  <script src="/vendor/jquery-3.0.0.js"></script>
+  <script defer src="/scripts/app.js"></script>
+
+  <!-- For Font Awesome 5 (Free version) -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
+
+  <style>
+    .heart-icon {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      font-size: 18px;
+      cursor: pointer;
+      margin-right: 5%;
+    }
+    .heart-icon .fas {
+      color: lightgray;
+    }
+    .heart-icon.favorited .fas {
+      color: red;
+    }
+    img.imgitems {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+    .card {
+      width: 300px;
+      height: 400px;
+    }
+    .card-body {
+      height: 150px;
+      overflow: hidden;
+    }
+    .card-text {
+      font-size: 0.8em;
+    }
+
+
+  </style>
+
+</head>
+<body>
+  <%- include('partials/_header') %>
+      <div class="container mt-5">
+        <div class="row">
+          <h2 class="col-12 text-center mb-3">Favourites</h2>
+    <% for (let i = 0; i < favourites.length; i++) { %>
+      <div class="col-md-4 mb-3">
+        <div class="card">
+          <img class="imgitems" src="<%= favourites[i].photo_1 %>" alt="product thumbnail">
+          <div class="card-body">
+            <h5 class="card-title"><%= favourites[i].name %></h5>
+            <p class="card-text">$<%= favourites[i].price %></p>
+            <p class="card-text"><%= favourites[i].description %></p>
+          </div>
+          <!-- Font Awesome Heart Icon -->
+          <span class="heart-icon" onclick="toggleFavorite(event)">
+            <i class="fas fa-heart"></i>
+          </span>
+        </div>
+      </div>
+      <% } %>
+    </div>
+  </div>
+  <script src="../public/scripts/app.js"></script>
+</body>
+
+</html>
