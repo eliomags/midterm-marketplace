@@ -1,0 +1,38 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/styles.css">
+  </head>
+  <body>
+    <%- include('partials/_header') %>
+    <div class="container mt-5">
+      <h2 class="text-center mb-3">Conversation</h2>
+      <% for (let i = 0; i < conversation.length; i++) { %>
+        <div class="card mb-3">
+          <div class="card-body">
+            <h5 class="card-title">
+              <%= conversation[i].sender_name %>
+            </h5>
+            <p class="card-text">
+              <%= conversation[i].message %>
+            </p>
+            <p class="card-text">
+              <small class="text-muted">
+                <%= conversation[i].time_sent %>
+              </small>
+            </p>
+          </div>
+        </div>
+      <% } %>
+      <form action="/messages/<%= listingId %>" method="POST">
+        <div class="form-group">
+          <textarea class="form-control" name="message" rows="3"></textarea>
+        </div>
+        <input type="hidden" name="senderId" value="<%= userId %>">
+        <input type="hidden" name="receiverId" value="<%= receiverId %>">
+        <input type="hidden" name="listingId" value="<%= listingId %>">
+        <button type="submit" class="btn btn-primary">Send</button>
+      </form>
+    </div>
+  </body>
+</html>
