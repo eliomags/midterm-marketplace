@@ -78,13 +78,13 @@ const getUserFavorites = function(userId) {
 const getUserMessages = function(userId) {
   const queryParams = [userId];
   let queryString = `
-    SELECT user_messages.message, sender.name, listings.title
+    SELECT user_messages.message, sender.name, listings.title, sender.id AS sender_id, receiver.id AS receiver_id
     FROM user_messages
     JOIN users AS sender ON user_messages.sender = sender.id
     JOIN users AS receiver ON user_messages.receiver = receiver.id
     JOIN listings ON user_messages.listing = listings.id
     WHERE sender.id = $1
-    GROUP BY listings.title, sender.name, user_messages.message;
+    GROUP BY listings.title, sender.name, user_messages.message, sender.id, receiver.id;
     `;
 
   return db.query(queryString, queryParams)
@@ -138,10 +138,10 @@ const getConversation = function(senderId, receiverId, listingId) {
 };
 
 const addListing = function(listing) {
-  let queryParams = [listing.owner_id, listing.title, listing.description, listing.photo_1, listing.photo_2, listing.photo_3, listing.photo_4, listing.price];
+  let queryParams = [listing.owner_id, listing.title, listing.description, listing.photo_1, listing.price];
 
   let queryString = `
-    INSERT INTO listings (owner_id, title, description, photo_1, photo_2,  photo_3, photo_4, price) VALUES ('$1, $2, $3, $4, $5, $6, $7, $8');
+    INSERT INTO listings (owner_id, title, description, photo_1, price) VALUES ('$1, $2, $3, $4, $5');
     `;
 
   return db.query(queryString, queryParams)
@@ -269,21 +269,6 @@ const editItem = function(id, options) {
   if (options.photo_1) {
     queryParams.push(option.photo_1)
     queryString += `photo_1 = $${queryParams.length}, `;
-  }
-
-  if (options.photo_2) {
-    queryParams.push(option.photo_2)
-    queryString += `photo_2 = $${queryParams.length}, `;
-  }
-
-  if (options.photo_3) {
-    queryParams.push(option.photo_3)
-    queryString += `photo_3 = $${queryParams.length}, `;
-  }
-
-  if (options.photo_4) {
-    queryParams.push(option.photo_4)
-    queryString += `photo_4 = $${queryParams.length}, `;
   }
 
   if (options.price) {
