@@ -14,7 +14,11 @@ router.get("/", (req, res) => {
   Promise.all([getFeaturedItems(), getAllItems(6, options)])
     .then(([featuredItems, allItems]) => {
       console.log(featuredItems);
-      res.render("items", { featuredItems, allItems });
+      res.render("items", {
+        featuredItems,
+        allItems,
+        userId: req.cookies.user_id,
+      });
     })
     .catch((error) => {
       console.log(error);

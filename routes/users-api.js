@@ -20,8 +20,6 @@ router.get("/", (req, res) => {
     });
 });
 
-module.exports = router;
-
 // module.exports = (db) => {
 //   router.get('/', (req, res) => {
 //     // userQueries.getUsers()
@@ -38,3 +36,21 @@ module.exports = router;
 //   });
 //   return router;
 // }
+
+// do this instead
+router.get("/login/:id", (req, res) => {
+  // // using encrypted cookies
+  // req.session.user_id = req.params.id;
+
+  // or using plain-text cookies
+  res.cookie("user_id", req.params.id);
+
+  // send the user somewhere
+  res.redirect("/");
+});
+
+router.post("/logout", (req, res) => {
+  res.clearCookie("user_id");
+  res.redirect("/");
+});
+module.exports = router;

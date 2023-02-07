@@ -11,9 +11,11 @@ const {
 
 // Code to handle request for editing a specific item by id
 router.get("/items/:id/edit", (req, res) => {
+  const userId = req.cookies.user_id;
+
   getItemById(req.params.id)
     .then((item) => {
-      res.render("edititem", { item });
+      res.render("edititem", { item, userId });
     })
     .catch((error) => {
       console.log(error);
@@ -47,7 +49,9 @@ router.post("/items/:id", (req, res) => {
 // Create: Add
 // get request for creating a new item
 router.get("/items/new", (req, res) => {
-  res.render("newitem");
+  const userId = req.cookies.user_id;
+
+  res.render("newitem", { userId });
 });
 
 // post request for adding a new item
@@ -80,11 +84,11 @@ router.post("/items/:id", (req, res) => {
 });
 
 // request for viewing current user's items
-router.get("/admin", (req, res) => {
-  const userId = req.session.user_id;
+router.get("/", (req, res) => {
+  const userId = req.cookies.user_id;
   getAdminListings(userId)
     .then((listings) => {
-      res.render("admin-listings", { listings: listings.rows });
+      res.render("admin", { listings: listings, userId });
     })
     .catch((error) => {
       console.log(error);
@@ -94,21 +98,10 @@ router.get("/admin", (req, res) => {
 
 // Delete
 // request for deleting a specific item by id
-//option via Delete
-router.delete("/items/:id", (req, res) => {
-  const listing = { id: req.params.id };
-  deleteListing(listing)
-    .then((response) => {
-      res.redirect("/admin");
-    })
-    .catch((error) => {
-      console.log(error);
-      res.status(500).send("Error deleting listing.");
-    });
-});
 //options via post request
 router.post("/items/:id/delete", (req, res) => {
   const listing = { id: req.params.id };
+
   deleteListing(listing)
     .then((response) => {
       res.redirect("/admin");
@@ -118,3 +111,5 @@ router.post("/items/:id/delete", (req, res) => {
       res.status(500).send("Error deleting listing.");
     });
 });
+
+module.exports = router;

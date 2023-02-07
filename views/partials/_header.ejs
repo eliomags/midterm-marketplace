@@ -1,10 +1,9 @@
 
 
   <nav class="navbar">
-
-
-    <!-- WHEN NOT LOGGED IN -->
-    <!-- <div class="navbar-left">
+<% if (!userId) { %>
+    <!-- WHEN NOT LOGGED IN --> -->
+    <div class="navbar-left">
     <a class="logo" href="/home">JZEL</a>
     <select class="dropdown">
       <option value="<$5">&lt;$5</option>
@@ -15,23 +14,23 @@
     <button class="search-button" type="search">Search</button>
   </div>
     <div class="sign-in">
-      <form class="login-button" action="/login" method="POST">
+      <form class="login-button" action="/api/user/login/1" method="POST">
       <input
         class="username"
         type="username"
         name="username"
         placeholder="Enter username"
       />
-      <button type="submit" class="logout-button">Logout</button>
+      <button type="submit" class="login-button">Login</button>
     </form>
-  </div> -->
-
+  </div>
+<% } else { %>
 
 
 
   <!-- WHEN LOGGED IN -->
   <div class="navbar-left">
-    <a class="logo" href="/home">JZEL</a>
+    <a class="logo" href="/items">JZEL</a>
     <select class="dropdown">
       <option value="<$5">&lt;$5</option>
       <option value="$5-$10">$5-$10</option>
@@ -43,11 +42,11 @@
    <div class="navbar-right">
     <a class="favourites" href="/favourites">Favourites</a>
     <a class="messages" href="/messages">Messages</a>
-    <a class="posted-ads" href="/ads">Posted Ads</a>
+    <a class="posted-ads" href="/admin">Posted Ads</a>
     <img class="profile-picture" src="TBT" />
-    <form class="logout-form" action="/logout" method="POST">
+    <form class="logout-form" action="/api/user/logout" method="POST">
       <button type="submit" class="logout-button">Logout</button>
     </form>
   </div> -->
   </nav>
-
+<%} %>

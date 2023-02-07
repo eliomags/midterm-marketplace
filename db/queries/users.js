@@ -61,13 +61,13 @@ const getFeaturedItems = function () {
     });
 };
 
-const getUserFavorites = function (userId) {
+const getUserFavourites = function (userId) {
   const queryParams = [userId];
   let queryString = `
     SELECT listings.*
     FROM listings
-    JOIN favorites ON favorites.listing_id = listings.id
-    WHERE favorites.user_id = $1;
+    JOIN user_favourites ON user_favourites.listing_id = listings.id
+    WHERE user_favourites.user_id = $1;
     `;
 
   return db
@@ -346,7 +346,7 @@ module.exports = {
   getUsers,
   getAllItems,
   getFeaturedItems,
-  getUserFavorites,
+  getUserFavourites,
   getUserMessages,
   getAdminListings,
   getConversation,
