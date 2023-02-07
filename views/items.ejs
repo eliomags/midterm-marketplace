@@ -40,15 +40,14 @@
     .heart-icon.favorited .fas {
       color: red;
     }
-    img.img-items {
+    img.imgitems {
       width: 100%;
       height: 200px;
       object-fit: cover;
     }
     .card {
-      width: 80%;
-      height: 150px;
-      margin: 20px auto;
+      width: 300px;
+      height: 400px;
     }
     .card-body {
       height: 150px;
@@ -57,24 +56,52 @@
     .card-text {
       font-size: 0.8em;
     }
-</style>
+
+
+  </style>
+
 </head>
 <body>
   <%- include('partials/_header') %>
-<div class="container mt-5">
-  <h2 class="text-center mb-3">Messages</h2>
-  <% if (messages.length === 0) { %>
-    <p class="text-center">No messages found.</p>
-  <% } else { %>
-    <% for (let i = 0; i < messages.length; i++) { %>
-      <div class="card" onclick="window.location='/messages/<%= messages[i].id %>'">
-        <div class="card-body">
-          <h5 class="card-title">Item: <%= messages[i].title %></h5>
-          <p class="card-text">Other User: <%= messages[i].sender_name %></p>
+      <div class="container mt-5">
+        <div class="row">
+          <h2 class="col-12 text-center mb-3">Featured Items</h2>
+    <% for (let i = 0; i < featuredItems.length; i++) { %>
+      <div class="col-md-4 mb-3">
+        <div class="card">
+          <img class="imgitems" src="<%= featuredItems[i].photo_1 %>" alt="product thumbnail">
+          <div class="card-body">
+            <h5 class="card-title"><%= featuredItems[i].name %></h5>
+            <p class="card-text">$<%= featuredItems[i].price %></p>
+            <p class="card-text"><%= featuredItems[i].description %></p>
+          </div>
+          <!-- Font Awesome Heart Icon -->
+          <span class="heart-icon" onclick="toggleFavorite(event)">
+            <i class="fas fa-heart"></i>
+          </span>
         </div>
       </div>
-    <% } %>
-  <% } %>
-</div>
-<body>
+      <% } %>
+    </div>
+    <div class="row">
+      <h2 class="col-12 text-center mb-3">All Items</h2>
+      <% for (let i = 0; i < allItems.length; i++) { %>
+        <div class="col-md-4 mb-3">
+          <div class="card">
+            <i class="fa fa-heart-o" aria-hidden="true" data-id="<%= allItems[i].id %>"></i>
+            <img class="imgitems" src="<%= allItems[i].photo_1 %>" alt="product thumbnail">
+            <div class="card-body">
+              <h5 class="card-title"><%= allItems[i].name %></h5>
+              <p class="card-text">$<%= allItems[i].price %></p>
+              <p class="card-text"><%= allItems[i].description %></p>
+              <i class="fa fa-heart-o" aria-hidden="false"></i>
+            </div>
+        </div>
+      </div>
+      <% } %>
+    </div>
+  </div>
+  <script src="../public/scripts/app.js"></script>
+</body>
+
 </html>
