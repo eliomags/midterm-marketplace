@@ -83,13 +83,13 @@ const getUserFavourites = function (userId) {
 const getUserMessages = function (userId) {
   const queryParams = [userId];
   let queryString = `
-    SELECT user_messages.message, sender.name AS sender_name, listings.title
+    SELECT user_messages.message, sender.name AS sender_name, listings.title, listings.id as id
     FROM user_messages
     JOIN users AS sender ON user_messages.sender = sender.id
     JOIN users AS receiver ON user_messages.receiver = receiver.id
     JOIN listings ON user_messages.listing = listings.id
     WHERE sender.id = $1
-    GROUP BY listings.title, sender.name, user_messages.message;
+    GROUP BY listings.title, sender.name, user_messages.message, listings.id;
     `;
 
   return db
