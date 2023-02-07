@@ -1,22 +1,81 @@
-<html>
-  <head>
-    <title>Messages</title>
-  </head>
-  <body>
-    <h1>Messages</h1>
-    <table>
-      <tr>
-        <th>Product ID</th>
-        <th>User ID</th>
-        <th>Message</th>
-      </tr>
-      <% messages.forEach(function(message) { %>
-        <tr>
-          <td><%= message.product_id %></td>
-          <td><%= message.user_id %></td>
-          <td><%= message.text %></td>
-        </tr>
-      <% }); %>
-    </table>
-  </body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
+  <title>AllItemst</title>
+
+  <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" />
+  <link rel="stylesheet" href="/vendor/border-box.css" />
+  <link rel="stylesheet" href="/styles/main.css" />
+  <link rel="stylesheet" href="/styles/layout.css" />
+  <!-- Bootstrap CSS -->
+  <link
+    rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+    integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+    crossorigin="anonymous"
+  />
+  <script src="/vendor/jquery-3.0.0.js"></script>
+  <script defer src="/scripts/app.js"></script>
+
+  <!-- For Font Awesome 5 (Free version) -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
+
+  <style>
+    .heart-icon {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      font-size: 18px;
+      cursor: pointer;
+      margin-right: 5%;
+    }
+    .heart-icon .fas {
+      color: lightgray;
+    }
+    .heart-icon.favorited .fas {
+      color: red;
+    }
+    img.img-items {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+    .card {
+      width: 80%;
+      height: 150px;
+      margin: 20px auto;
+    }
+    .card-body {
+      height: 150px;
+      overflow: hidden;
+    }
+    .card-text {
+      font-size: 0.8em;
+    }
+</style>
+</head>
+<body>
+  <%- include('partials/_header') %>
+<div class="container mt-5">
+  <h2 class="text-center mb-3">Messages</h2>
+  <% if (messages.length === 0) { %>
+    <p class="text-center">No messages found.</p>
+  <% } else { %>
+    <% for (let i = 0; i < messages.length; i++) { %>
+      <div class="card" onclick="window.location='/messages/<%= messages[i].listing_id %>'">
+        <div class="card-body">
+          <h5 class="card-title">Listing ID: <%= messages[i].listing_id %></h5>
+          <p class="card-text">Other User: <%= messages[i].other_user %></p>
+          <p class="card-text">Last Message Time: <%= messages[i].last_message_time %></p>
+        </div>
+      </div>
+    <% } %>
+  <% } %>
+</div>
+<body>
 </html>

@@ -38,7 +38,7 @@ router.get("/", (req, res) => {
 // }
 
 // do this instead
-router.get("/login/:id", (req, res) => {
+router.post("/login/:id", (req, res) => {
   // // using encrypted cookies
   // req.session.user_id = req.params.id;
 
@@ -46,11 +46,11 @@ router.get("/login/:id", (req, res) => {
   res.cookie("user_id", req.params.id);
 
   // send the user somewhere
-  res.redirect("/");
+  res.redirect("/items");
 });
 
 router.post("/logout", (req, res) => {
   res.clearCookie("user_id");
-  res.redirect("/");
+  res.redirect("/items");
 });
 module.exports = router;
