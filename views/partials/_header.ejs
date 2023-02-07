@@ -1,8 +1,8 @@
 
 
+    <!-- WHEN NOT LOGGED IN -->
   <nav class="navbar">
 <% if (!userId) { %>
-    <!-- WHEN NOT LOGGED IN --> -->
     <div class="navbar-left">
     <a class="logo" href="/home">JZEL</a>
     <select class="dropdown">
@@ -26,8 +26,6 @@
   </div>
 <% } else { %>
 
-
-
   <!-- WHEN LOGGED IN -->
   <div class="navbar-left">
     <a class="logo" href="/items">JZEL</a>
@@ -43,10 +41,11 @@
     <a class="favourites" href="/favourites">Favourites</a>
     <a class="messages" href="/messages">Messages</a>
     <a class="posted-ads" href="/admin">Posted Ads</a>
+    <a class="post-ad" href="/items/new">Post Ad</a>
     <img class="profile-picture" src="TBT" />
     <form class="logout-form" action="/api/user/logout" method="POST">
       <button type="submit" class="logout-button">Logout</button>
     </form>
-  </div> -->
-  </nav>
-<%} %>
+  </div>
+  <%} %>
+</nav>
