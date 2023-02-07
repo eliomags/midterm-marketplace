@@ -47,7 +47,6 @@ router.post("/login/:id", (req, res) => {
 
   // send the user somewhere
   res.redirect("/items");
-console.log("hello")
 });
 
 router.post("/logout", (req, res) => {

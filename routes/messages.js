@@ -7,12 +7,13 @@ const {
 } = require("../db/queries/users");
 
 // request for viewing messages
-router.get("/messages", (req, res) => {
+router.get("/", (req, res) => {
   const userId = req.cookies.user_id;
+  const listing_id = req.params.listing_id;
 
-  getUserMessages(user_Id)
+  getUserMessages(userId)
     .then((messages) => {
-      res.render("messages", { messages: messages.rows, userId });
+      res.render("messages", { messages: messages, userId, listing_id });
     })
     .catch((error) => {
       console.log(error);

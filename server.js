@@ -62,7 +62,7 @@ app.use("/admin", adminRoutes);
 // Separate them into separate routes files (see above).
 
 app.get("/", (req, res) => {
-  res.redirect("/items");
+  res.redirect("items");
 });
 
 app.listen(PORT, () => {
