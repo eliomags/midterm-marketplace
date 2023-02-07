@@ -8,11 +8,11 @@ const {
 
 // request for viewing messages
 router.get("/messages", (req, res) => {
-  const userId = req.params.userId;
+  const userId = req.cookies.user_id;
 
-  getUserMessages(userId)
+  getUserMessages(user_Id)
     .then((messages) => {
-      res.render("messages", { messages: messages.rows });
+      res.render("messages", { messages: messages.rows, userId });
     })
     .catch((error) => {
       console.log(error);
@@ -21,14 +21,15 @@ router.get("/messages", (req, res) => {
 });
 
 // request for a specific message by product_id and user_i (buyer)
-router.get("/messages/:listing_id/:user_id", (req, res) => {
+router.get("/messages/:listing_id", (req, res) => {
   const senderId = req.query.senderId;
   const receiverId = req.query.receiverId;
   const listingId = req.query.listingId;
+  const userId = res.cookie.user_id;
 
   getConversation(senderId, receiverId, listingId)
     .then((conversation) => {
-      res.render("conversation", { conversation });
+      res.render("conversation", { conversation, userId });
     })
     .catch((error) => {
       console.log(error);
@@ -37,14 +38,14 @@ router.get("/messages/:listing_id/:user_id", (req, res) => {
 });
 
 // request for creating a new message
-router.get("/messages/:listing_id/:user_id/new", (req, res) => {
+router.get("/messages/:listing_id/new", (req, res) => {
   const item_id = req.params.listing_id;
-  const user_id = req.params.user_id;
-  res.render("newmessage", { item_id, user_id });
+  const userId = req.cookies.user_id;
+  res.render("newmessage", { item_id, userId });
 });
 
 // request for adding a new message
-router.post("/messages/:item_id/:user_id", (req, res) => {
+router.post("/messages/:item_id", (req, res) => {
   let message = {
     sender: req.body.sender,
     receiver: req.body.receiver,

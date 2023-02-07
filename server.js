@@ -7,8 +7,12 @@ const express = require("express");
 const morgan = require("morgan");
 const path = require("path");
 
+const cookieparser = require("cookie-parser");
+
 const PORT = process.env.PORT || 8080;
 const app = express();
+
+app.use(cookieparser());
 
 // Set the view engine to ejs
 app.set("view engine", "ejs");
@@ -37,9 +41,9 @@ const userApiRoutes = require("./routes/users-api");
 const widgetApiRoutes = require("./routes/widgets-api");
 const usersRoutes = require("./routes/users");
 const itemsRoutes = require("./routes/items");
-// const favoritesRoutes = require("./routes/favorites");
-// const messagesRoutes = require("./routes/messages");
-// const adminRoutes = require("./routes/admin");
+const favouritesRoutes = require("./routes/favourites");
+const messagesRoutes = require("./routes/messages");
+const adminRoutes = require("./routes/admin");
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
@@ -49,9 +53,9 @@ app.use("/api/widgets", widgetApiRoutes);
 app.use("/users", usersRoutes);
 // Note: mount other resources here, using the same pattern above
 app.use("/items", itemsRoutes);
-// app.use("/favorites", favoritesRoutes);
-// app.use("/messages", messagesRoutes);
-// app.use("/admin", adminRoutes);
+app.use("/favourites", favouritesRoutes);
+app.use("/messages", messagesRoutes);
+app.use("/admin", adminRoutes);
 
 // Home page
 // Warning: avoid creating more routes in this file!

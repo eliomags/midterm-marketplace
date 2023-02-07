@@ -65,37 +65,20 @@
   <%- include('partials/_header') %>
       <div class="container mt-5">
         <div class="row">
-          <h2 class="col-12 text-center mb-3">Featured Items</h2>
-    <% for (let i = 0; i < featuredItems.length; i++) { %>
+          <h2 class="col-12 text-center mb-3">Favourites</h2>
+    <% for (let i = 0; i < favourites.length; i++) { %>
       <div class="col-md-4 mb-3">
         <div class="card">
-          <img class="imgitems" src="<%= featuredItems[i].photo_1 %>" alt="product thumbnail">
+          <img class="imgitems" src="<%= favourites[i].photo_1 %>" alt="product thumbnail">
           <div class="card-body">
-            <h5 class="card-title"><%= featuredItems[i].name %></h5>
-            <p class="card-text">$<%= featuredItems[i].price %></p>
-            <p class="card-text"><%= featuredItems[i].description %></p>
+            <h5 class="card-title"><%= favourites[i].name %></h5>
+            <p class="card-text">$<%= favourites[i].price %></p>
+            <p class="card-text"><%= favourites[i].description %></p>
           </div>
           <!-- Font Awesome Heart Icon -->
           <span class="heart-icon" onclick="toggleFavorite(event)">
             <i class="fas fa-heart"></i>
           </span>
-        </div>
-      </div>
-      <% } %>
-    </div>
-    <div class="row">
-      <h2 class="col-12 text-center mb-3">All Items</h2>
-      <% for (let i = 0; i < allItems.length; i++) { %>
-        <div class="col-md-4 mb-3">
-          <div class="card">
-            <i class="fa fa-heart-o" aria-hidden="true" data-id="<%= allItems[i].id %>"></i>
-            <img class="imgitems" src="<%= allItems[i].photo_1 %>" alt="product thumbnail">
-            <div class="card-body">
-              <h5 class="card-title"><%= allItems[i].name %></h5>
-              <p class="card-text">$<%= allItems[i].price %></p>
-              <p class="card-text"><%= allItems[i].description %></p>
-              <i class="fa fa-heart-o" aria-hidden="false"></i>
-            </div>
         </div>
       </div>
       <% } %>
