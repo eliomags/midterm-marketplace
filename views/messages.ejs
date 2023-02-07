@@ -67,11 +67,10 @@
     <p class="text-center">No messages found.</p>
   <% } else { %>
     <% for (let i = 0; i < messages.length; i++) { %>
-      <div class="card" onclick="window.location='/messages/<%= messages[i].listing_id %>'">
+      <div class="card" onclick="window.location='/messages/'">
         <div class="card-body">
-          <h5 class="card-title">Listing ID: <%= messages[i].listing_id %></h5>
-          <p class="card-text">Other User: <%= messages[i].other_user %></p>
-          <p class="card-text">Last Message Time: <%= messages[i].last_message_time %></p>
+          <h5 class="card-title">Item: <%= messages[i].title %></h5>
+          <p class="card-text">Other User: <%= messages[i].sender_name %></p>
         </div>
       </div>
     <% } %>

@@ -9,11 +9,12 @@ const {
 // request for viewing messages
 router.get("/", (req, res) => {
   const userId = req.cookies.user_id;
-  const listing_id = req.params.listing_id;
+  // const listing_id = req.params.listing_id;
 
   getUserMessages(userId)
     .then((messages) => {
-      res.render("messages", { messages: messages, userId, listing_id });
+      console.log("messages", messages);
+      res.render("messages", { messages: messages, userId });
     })
     .catch((error) => {
       console.log(error);
