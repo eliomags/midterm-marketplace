@@ -13,6 +13,7 @@ router.get("/", (req, res) => {
 
   getUserFavourites(userId)
     .then((favourites) => {
+      console.log(favourites, "favourites")
       res.render("favourites", { favourites: favourites, userId });
     })
     .catch((error) => {
@@ -21,13 +22,17 @@ router.get("/", (req, res) => {
 });
 
 // Code to handle request for adding a favourite inside GET /items + /items/:id
-router.post("/favourites", (req, res) => {
+router.post("/", (req, res) => {
+  console.log("inside favourites route")
+  console.log(req.body)
   let favourite = {
-    user_id: req.body.user_id,
+    user_id: req.cookies.user_id,
     listing_id: req.body.listing_id,
   };
+  console.log(favourite)
   addFavourite(favourite)
     .then((result) => {
+      console.log("result from addfavourite", result)
       res.status(200).json({ result });
       // res.redirect(`/items/${favourite.listing_id}`);
     })
@@ -39,7 +44,7 @@ router.post("/favourites", (req, res) => {
 
 // request for removing a favourite by id
 //option via Delete
-router.delete("/favourites/:id", (req, res) => {
+router.delete("/:id", (req, res) => {
   const favourite = { id: req.params.id };
   deleteFavourite(favourite)
     .then((response) => {
@@ -52,16 +57,16 @@ router.delete("/favourites/:id", (req, res) => {
 });
 
 //options via post request
-router.post("/favourites/:id/remove", (req, res) => {
-  const favourite = { id: req.params.id };
-  deleteFavourite(favourite)
-    .then((response) => {
-      res.send(response);
-    })
-    .catch((error) => {
-      console.log(error);
-      res.status(500).send("Error deleting favourite.");
-    });
-});
+// router.post("/favourites/:id/remove", (req, res) => {
+//   const favourite = { id: req.params.id };
+//   deleteFavourite(favourite)
+//     .then((response) => {
+//       res.send(response);
+//     })
+//     .catch((error) => {
+//       console.log(error);
+//       res.status(500).send("Error deleting favourite.");
+//     });
+// });
 
 module.exports = router;
