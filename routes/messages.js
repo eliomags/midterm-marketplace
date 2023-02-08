@@ -23,7 +23,7 @@ router.get("/", (req, res) => {
 });
 
 // request for a specific message by product_id and user_i (buyer)
-router.get("/messages/:listing_id", (req, res) => {
+router.get("/:listing_id", (req, res) => {
   const senderId = req.query.senderId;
   const receiverId = req.query.receiverId;
   const listingId = req.query.listingId;
@@ -31,7 +31,7 @@ router.get("/messages/:listing_id", (req, res) => {
 
   getConversation(senderId, receiverId, listingId)
     .then((conversation) => {
-      res.render("conversation", { conversation, userId });
+      res.render("conversation", { conversation, userId ,listingId, receiverId });
     })
     .catch((error) => {
       console.log(error);
