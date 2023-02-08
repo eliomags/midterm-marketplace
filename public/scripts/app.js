@@ -1,5 +1,7 @@
 // Client facing scripts here
 
+// const { getFeaturedItems } = require("../../db/queries/users");
+
 // function toggleFavourite(icon) {
 //   // Check if the icon has the "fa-heart-o" class
 //   if (icon.classList.contains("fa-heart-o")) {
@@ -27,16 +29,20 @@
 //   });
 // }
 
-function toggleFavorite(event) {
+function toggleFavourite(event, id) {
+  event.preventDefault();
+  console.log("THE ID", id)
   const icon = event.target;
-  icon.classList.toggle("favorited");
+  icon.classList.toggle("favourited");
 
-  // Send POST request to add/remove item from favorites list
-  fetch("/api/favorites", {
-    method: "POST",
-    body: JSON.stringify({ itemId: featuredItems[i].id }),
+  const data = { listing_id: id};
+
+  // Send POST request to add/remove item from favourites list
+  fetch("/favourites", {
+    method: 'POST',
+    body: JSON.stringify(data),
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
   });
 }
