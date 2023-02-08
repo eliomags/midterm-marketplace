@@ -44,7 +44,7 @@ const itemsRoutes = require("./routes/items");
 const favouritesRoutes = require("./routes/favourites");
 const messagesRoutes = require("./routes/messages");
 const adminRoutes = require("./routes/admin");
-
+const postadRoutes = require("./routes/postad");
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
 // Note: Endpoints that return data (eg. JSON) usually start with `/api`
@@ -56,6 +56,7 @@ app.use("/items", itemsRoutes);
 app.use("/favourites", favouritesRoutes);
 app.use("/messages", messagesRoutes);
 app.use("/admin", adminRoutes);
+app.use("/postad", postadRoutes);
 
 // Home page
 // Warning: avoid creating more routes in this file!

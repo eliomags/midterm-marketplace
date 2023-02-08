@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
+  <title>AllItemst</title>
+
+  <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" />
+  <link rel="stylesheet" href="/vendor/border-box.css" />
+  <link rel="stylesheet" href="/styles/main.css" />
+  <link rel="stylesheet" href="/styles/layout.css" />
+  <!-- Bootstrap CSS -->
+  <link
+    rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+    integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+    crossorigin="anonymous"
+  />
+  <script src="/vendor/jquery-3.0.0.js"></script>
+  <script defer src="/scripts/app.js"></script>
+
+  <!-- For Font Awesome 5 (Free version) -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
+</head>
+
+<style>
+  h2{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    margin-top : 1.5em
+
+  }
+  .new-ad-form{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    margin-top : 3em
+  }
+input{
+  width: 300px;
+}
+textarea{
+  width: 300px;
+}
+
+</style>
+
+<body>
+  <%- include('partials/_header') %>
+<h2>Post New Ad</h2>
+<form action="/api/properties" method="post" id="new-ad-form" class="new-ad-form">
+  <div class="new-ad-form__field-wrapper">
+    <input type="text" name="title" placeholder="Title" id="new-ad-form__title">
+  </div>
+
+  <div class="new-ad-form__field-wrapper">
+    <textarea placeholder="Description" name="description" iew-ad-form__description" cols="30" rows="10"></textarea>
+  </div>
+
+
+  <div class="new-ad-form__field-wrapper">
+    <input placeholder="Enter price" type="number" name="price" id="new-ad-form__price">
+  </div>
+
+    <div class="new-ad-form__buttons">
+        <button>Create</button>
+        <a iew-ad-form__cancel" href="#">Cancel</a>
+    </div>
+
+</form>
+</body>
+
+</html>
