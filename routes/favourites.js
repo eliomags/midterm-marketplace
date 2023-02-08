@@ -10,11 +10,24 @@ const {
 router.get("/", (req, res) => {
   console.log("user_id", req.cookies.user_id);
   const userId = req.cookies.user_id;
-
+  let options = {};
+  if (req.query.min_price) {
+    options.min_price = parseInt(req.query.min_price);
+  }
+  if (req.query.max_price) {
+    options.max_price = parseInt(req.query.max_price);
+  }
   getUserFavourites(userId)
     .then((favourites) => {
-      console.log(favourites, "favourites")
-      res.render("favourites", { favourites: favourites, userId });
+      console.log(favourites, "favourites");
+      res.render("favourites", {
+        favourites: favourites,
+        userId,
+        priceRange: {
+          min_price: options.min_price,
+          max_price: options.max_price,
+        },
+      });
     })
     .catch((error) => {
       res.status(500).json({ error: error.message });
@@ -23,16 +36,16 @@ router.get("/", (req, res) => {
 
 // Code to handle request for adding a favourite inside GET /items + /items/:id
 router.post("/", (req, res) => {
-  console.log("inside favourites route")
-  console.log(req.body)
+  console.log("inside favourites route");
+  console.log(req.body);
   let favourite = {
     user_id: req.cookies.user_id,
     listing_id: req.body.listing_id,
   };
-  console.log(favourite)
+  console.log(favourite);
   addFavourite(favourite)
     .then((result) => {
-      console.log("result from addfavourite", result)
+      console.log("result from addfavourite", result);
       res.status(200).json({ result });
       // res.redirect(`/items/${favourite.listing_id}`);
     })
