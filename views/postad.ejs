@@ -54,13 +54,13 @@ textarea{
 <body>
   <%- include('partials/_header') %>
 <h2>Post New Ad</h2>
-<form action="/api/properties" method="post" id="new-ad-form" class="new-ad-form">
+<form action="/postad" method="post" id="new-ad-form" class="new-ad-form">
   <div class="new-ad-form__field-wrapper">
     <input type="text" name="title" placeholder="Title" id="new-ad-form__title">
   </div>
 
   <div class="new-ad-form__field-wrapper">
-    <textarea placeholder="Description" name="description" iew-ad-form__description" cols="30" rows="10"></textarea>
+    <textarea placeholder="Description" name="description" id= "new-ad-form__description" cols="30" rows="10"></textarea>
   </div>
 
 
@@ -70,7 +70,7 @@ textarea{
 
     <div class="new-ad-form__buttons">
         <button>Create</button>
-        <a iew-ad-form__cancel" href="#">Cancel</a>
+        <a id="new-ad-form__cancel" href="#">Cancel</a>
     </div>
 
 </form>

@@ -12,10 +12,17 @@ const {
 // Code to handle request for editing a specific item by id
 router.get("/items/:id/edit", (req, res) => {
   const userId = req.cookies.user_id;
+  let priceRange = {};
+  priceRange.min_price = parseInt(req.query.min_price);
+  priceRange.max_price = parseInt(req.query.min_price);
 
   getItemById(req.params.id)
     .then((item) => {
-      res.render("edititem", { item, userId });
+      res.render("edititem", {
+        item,
+        userId,
+        priceRange,
+      });
     })
     .catch((error) => {
       console.log(error);
@@ -46,27 +53,6 @@ router.post("/items/:id", (req, res) => {
     });
 });
 
-// Create: Add
-// get request for creating a new item
-router.get("/items/new", (req, res) => {
-  const userId = req.cookies.user_id;
-
-  res.render("newitem", { userId });
-});
-
-// post request for adding a new item
-router.post("/items", (req, res) => {
-  let item = req.body;
-  addListing(item)
-    .then(() => {
-      res.redirect("/");
-    })
-    .catch((error) => {
-      console.log(error);
-      res.status(500).json({ error: error.message });
-    });
-});
-
 // request to edit Sold Status,
 router.post("/items/:id", (req, res) => {
   let listing = {
@@ -86,9 +72,17 @@ router.post("/items/:id", (req, res) => {
 // request for viewing current user's items
 router.get("/", (req, res) => {
   const userId = req.cookies.user_id;
+  let priceRange = {};
+  priceRange.min_price = parseInt(req.query.min_price);
+  priceRange.max_price = parseInt(req.query.min_price);
+
   getAdminListings(userId)
     .then((listings) => {
-      res.render("admin", { listings: listings, userId });
+      res.render("admin", {
+        listings: listings,
+        userId,
+        priceRange,
+      });
     })
     .catch((error) => {
       console.log(error);
