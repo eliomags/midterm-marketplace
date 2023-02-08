@@ -145,8 +145,14 @@ const getConversation = function (senderId, receiverId, listingId) {
     });
 };
 
-const addListing = function(listing) {
-  let queryParams = [listing.owner_id, listing.title, listing.description, listing.photo_1, listing.price];
+const addListing = function (listing) {
+  let queryParams = [
+    listing.owner_id,
+    listing.title,
+    listing.description,
+    listing.photo_1,
+    listing.price,
+  ];
 
   let queryString = `
     INSERT INTO listings (owner_id, title, description, photo_1, price) VALUES ($1, $2, $3, $4, $5);
@@ -164,14 +170,19 @@ const addListing = function(listing) {
 
 const addFavourite = function (favourite) {
   let queryParams = [favourite.user_id, favourite.listing_id];
-  let queryString = `
-    INSERT INTO user_favourites (user_id, listing_id) VALUES ($1, $2);
-    `;
-
+  let string = `SELECT * FROM user_favourites WHERE user_id = $1 AND listing_id = $2;`;
   return db
-    .query(queryString, queryParams)
+    .query(string, queryParams)
     .then((response) => {
-      return response.rows;
+      if (response.rows.length === 0) {
+        let queryString = `
+        INSERT INTO user_favourites (user_id, listing_id) VALUES ($1, $2);
+        `;
+        return db.query(queryString, queryParams);
+      }
+    })
+    .then((response) => {
+      console.log("new favoritesaved");
     })
     .catch((error) => {
       console.log(error);
