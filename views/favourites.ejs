@@ -34,10 +34,10 @@
       cursor: pointer;
       margin-right: 5%;
     }
-    .heart-icon .fas {
+    .heart-icon.fas {
       color: lightgray;
     }
-    .heart-icon.favourited .fas {
+    .heart-icon.favourited.fas {
       color: red;
     }
     img.imgitems {
@@ -76,15 +76,13 @@
             <p class="card-text"><%= favourites[i].description %></p>
           </div>
           <!-- Font Awesome Heart Icon -->
-          <span class="heart-icon" onclick="toggleFavourite(event, '<%= favourites[i].id %>')">
-            <i class="fas fa-heart"></i>
-          </span>
+            <i class="heart-icon fas fa-heart" onclick="ToggleFavourite(event, '<%= favourites[i].id %>')"></i>
         </div>
       </div>
       <% } %>
     </div>
   </div>
-  <script src="../public/scripts/app.js"></script>
 </body>
+<script src="../public/scripts/app.js"></script>
 
 </html>
