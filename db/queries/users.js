@@ -149,7 +149,7 @@ const addListing = function(listing) {
   let queryParams = [listing.owner_id, listing.title, listing.description, listing.photo_1, listing.price];
 
   let queryString = `
-    INSERT INTO listings (owner_id, title, description, photo_1, price) VALUES ('$1, $2, $3, $4, $5');
+    INSERT INTO listings (owner_id, title, description, photo_1, price) VALUES ($1, $2, $3, $4, $5);
     `;
 
   return db
