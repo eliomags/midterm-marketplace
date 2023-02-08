@@ -7,7 +7,6 @@ CREATE TABLE listings (
   description TEXT,
   photo_1 VARCHAR(255) NOT NULL,
   price INTEGER NOT NULL DEFAULT 0,
-  list_date DATE NOT NULL,
   featured_status BOOLEAN NOT NULL DEFAULT FALSE,
   sold_status BOOLEAN NOT NULL DEFAULT FALSE
 );
