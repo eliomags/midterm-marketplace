@@ -1,16 +1,16 @@
 
 
   <nav class="navbar">
-<% if (!userId) { %>
+<% if (typeof userId === "undefined") { %>
     <!-- WHEN NOT LOGGED IN -->
     <div class="navbar-left">
     <a class="logo" href="/items">JZEL</a>
     <select class="dropdown" id="price-range-select" onchange="submitForm()">
-      <option value="$0-$100" <%= priceRange.min_price===0 && priceRange.max_price===100 ? 'selected' : false %>>Choose price range</option>
-      <option value="$0-$5" <%= priceRange.min_price===0 && priceRange.max_price===5 ? 'selected' : false %>>&lt;$5</option>
-      <option value="$5-$10" <%= priceRange.min_price===5 && priceRange.max_price===10 ? 'selected' : false %>>$5-$10</option>
-      <option value="$10-$20" <%= priceRange.min_price===10 && priceRange.max_price===20 ? 'selected' : false %>>$10-$20</option>
-      <option value="$20-$100" <%= priceRange.min_price===20 && priceRange.max_price===100 ? 'selected' : false %>>&gt;$20</option>
+      <option value="$0-$100" <%= typeof priceRange !== "undefined" && priceRange.min_price===0 && priceRange.max_price===100 ? 'selected' : false %>>Choose price range</option>
+      <option value="$0-$5" <%= typeof priceRange !== "undefined" && priceRange.min_price===0 && priceRange.max_price===5 ? 'selected' : false %>>&lt;$5</option>
+      <option value="$5-$10" <%= typeof priceRange !== "undefined" && priceRange.min_price===5 && priceRange.max_price===10 ? 'selected' : false %>>$5-$10</option>
+      <option value="$10-$20" <%= typeof priceRange !== "undefined" && priceRange.min_price===10 && priceRange.max_price===20 ? 'selected' : false %>>$10-$20</option>
+      <option value="$20-$100" <%= typeof priceRange !== "undefined" && priceRange.min_price===20 && priceRange.max_price===100 ? 'selected' : false %>>&gt;$20</option>
     </select>
   </div>
     <div class="sign-in">
@@ -33,11 +33,11 @@
   <div class="navbar-left">
     <a class="logo" href="/items">JZEL</a>
     <select class="dropdown" id="price-range-select" onchange="submitForm()">
-      <option value="$0-$100" <%= priceRange.min_price===0 && priceRange.max_price===100 ? 'selected' : false %>>Choose price range</option>
-      <option value="$0-$5" <%= priceRange.min_price===0 && priceRange.max_price===5 ? 'selected' : false %>>&lt;$5</option>
-      <option value="$5-$10" <%= priceRange.min_price===5 && priceRange.max_price===10 ? 'selected' : false %>>$5-$10</option>
-      <option value="$10-$20" <%= priceRange.min_price===10 && priceRange.max_price===20 ? 'selected' : false %>>$10-$20</option>
-      <option value="$20-$100" <%= priceRange.min_price===20 && priceRange.max_price===100 ? 'selected' : false %>>&gt;$20</option>
+      <option value="$0-$100" <%= typeof priceRange !== "undefined" && priceRange.min_price===0 && priceRange.max_price===100 ? 'selected' : false %>>Choose price range</option>
+      <option value="$0-$5" <%= typeof priceRange !== "undefined" && priceRange.min_price===0 && priceRange.max_price===5 ? 'selected' : false %>>&lt;$5</option>
+      <option value="$5-$10" <%= typeof priceRange !== "undefined" && priceRange.min_price===5 && priceRange.max_price===10 ? 'selected' : false %>>$5-$10</option>
+      <option value="$10-$20" <%= typeof priceRange !== "undefined" && priceRange.min_price===10 && priceRange.max_price===20 ? 'selected' : false %>>$10-$20</option>
+      <option value="$20-$100" <%= typeof priceRange !== "undefined" && priceRange.min_price===20 && priceRange.max_price===100 ? 'selected' : false %>>&gt;$20</option>
     </select>
   </div>
    <div class="navbar-right">
