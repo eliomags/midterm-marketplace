@@ -2,16 +2,16 @@
 
   <nav class="navbar">
 <% if (!userId) { %>
-    <!-- WHEN NOT LOGGED IN --> -->
+    <!-- WHEN NOT LOGGED IN -->
     <div class="navbar-left">
-    <a class="logo" href="/home">JZEL</a>
-    <select class="dropdown">
-      <option value="<$5">&lt;$5</option>
-      <option value="$5-$10">$5-$10</option>
-      <option value="$10-$20">$10-$20</option>
-      <option value=">$20">&gt;$20</option>
+    <a class="logo" href="/items">JZEL</a>
+    <select class="dropdown" id="price-range-select" onchange="submitForm()">
+      <option value="$0-$100" <%= priceRange.min_price===0 && priceRange.max_price===100 ? 'selected' : false %>>Choose price range</option>
+      <option value="$0-$5" <%= priceRange.min_price===0 && priceRange.max_price===5 ? 'selected' : false %>>&lt;$5</option>
+      <option value="$5-$10" <%= priceRange.min_price===5 && priceRange.max_price===10 ? 'selected' : false %>>$5-$10</option>
+      <option value="$10-$20" <%= priceRange.min_price===10 && priceRange.max_price===20 ? 'selected' : false %>>$10-$20</option>
+      <option value="$20-$100" <%= priceRange.min_price===20 && priceRange.max_price===100 ? 'selected' : false %>>&gt;$20</option>
     </select>
-    <button class="search-button" type="search">Search</button>
   </div>
     <div class="sign-in">
       <form class="login-button" action="/api/users/login/1" method="POST">
@@ -20,6 +20,7 @@
         type="username"
         name="username"
         placeholder="Enter username"
+        required
       />
       <button type="submit" class="login-button">Login</button>
     </form>
@@ -31,23 +32,24 @@
   <!-- WHEN LOGGED IN -->
   <div class="navbar-left">
     <a class="logo" href="/items">JZEL</a>
-    <select class="dropdown">
-      <option value="<$5">&lt;$5</option>
-      <option value="$5-$10">$5-$10</option>
+    <select class="dropdown" id="price-range-select" onchange="submitForm()">
+      <option value="$0-$100">Choose price range</option>
+      <option value="$0-$5">&lt;$5</option>
+      <option selected value="$5-$10">$5-$10</option>
       <option value="$10-$20">$10-$20</option>
-      <option value=">$20">&gt;$20</option>
+      <option value="$20-$100">&gt;$20</option>
     </select>
-    <button class="search-button" type="search">Search</button>
   </div>
    <div class="navbar-right">
     <a class="favourites" href="/favourites">Favourites</a>
     <a class="messages" href="/messages">Messages</a>
     <a class="posted-ads" href="/admin">Posted Ads</a>
-    <a class="post-ad" href="/items/new">Posted Ad</a>
+    <a class="post-ad" href="/postad">Post Ad</a>
+
     <img class="profile-picture" src="TBT" />
     <form class="logout-form" action="/api/users/logout" method="POST">
       <button type="submit" class="logout-button">Logout</button>
     </form>
-  </div> -->
-  </nav>
-<%} %>
+  </div>
+  <%} %>
+</nav>

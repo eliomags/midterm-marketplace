@@ -24,63 +24,56 @@
 
   <!-- For Font Awesome 5 (Free version) -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
-
-  <style>
-    .heart-icon {
-      position: absolute;
-      bottom: 0;
-      right: 0;
-      font-size: 18px;
-      cursor: pointer;
-      margin-right: 5%;
-    }
-    .heart-icon.fas {
-      color: lightgray;
-    }
-    .heart-icon.favourited.fas {
-      color: red;
-    }
-    img.imgitems {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-    }
-    .card {
-      width: 300px;
-      height: 400px;
-    }
-    .card-body {
-      height: 150px;
-      overflow: hidden;
-    }
-    .card-text {
-      font-size: 0.8em;
-    }
-
-
-  </style>
-
 </head>
+
+<style>
+  h2{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    margin-top : 1.5em
+
+  }
+  .new-ad-form{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    margin-top : 3em
+  }
+input{
+  width: 300px;
+}
+textarea{
+  width: 300px;
+}
+
+</style>
+
 <body>
   <%- include('partials/_header') %>
-      <div class="container mt-5">
-        <div class="row">
-          <h2 class="col-12 text-center mb-3">Favourites</h2>
-    <% for (let i = 0; i < favourites.length; i++) { %>
-      <div class="col-md-4 mb-3">
-        <div class="card">
-          <img class="imgitems" src="<%= favourites[i].photo_1 %>" alt="product thumbnail">
-          <div class="card-body">
-            <h5 class="card-title"><%= favourites[i].name %></h5>
-            <p class="card-text">$<%= favourites[i].price %></p>
-            <p class="card-text"><%= favourites[i].description %></p>
-          </div>
-          <!-- Font Awesome Heart Icon -->
-            <i class="heart-icon fas fa-heart" onclick="ToggleFavourite(event, '<%= favourites[i].id %>')"></i>
-        </div>
-      </div>
-      <% } %>
-    </div>
+<h2>Post New Ad</h2>
+<form action="/api/properties" method="post" id="new-ad-form" class="new-ad-form">
+  <div class="new-ad-form__field-wrapper">
+    <input type="text" name="title" placeholder="Title" id="new-ad-form__title">
   </div>
+
+  <div class="new-ad-form__field-wrapper">
+    <textarea placeholder="Description" name="description" iew-ad-form__description" cols="30" rows="10"></textarea>
+  </div>
+
+
+  <div class="new-ad-form__field-wrapper">
+    <input placeholder="Enter price" type="number" name="price" id="new-ad-form__price">
+  </div>
+
+    <div class="new-ad-form__buttons">
+        <button>Create</button>
+        <a iew-ad-form__cancel" href="#">Cancel</a>
+    </div>
+
+</form>
 </body>
+
 </html>

@@ -6,10 +6,10 @@ const { getAllItems, getFeaturedItems } = require("../db/queries/users");
 router.get("/", (req, res) => {
   let options = {};
   if (req.query.min_price) {
-    options.min_price = req.query.min_price;
+    options.min_price = parseInt(req.query.min_price);
   }
   if (req.query.max_price) {
-    options.max_price = req.query.max_price;
+    options.max_price = parseInt(req.query.max_price);
   }
   Promise.all([getFeaturedItems(), getAllItems(6, options)])
     .then(([featuredItems, allItems]) => {
@@ -18,6 +18,10 @@ router.get("/", (req, res) => {
         featuredItems,
         allItems,
         userId: req.cookies.user_id,
+        priceRange: {
+          min_price: options.min_price,
+          max_price: options.max_price,
+        },
       });
     })
     .catch((error) => {
