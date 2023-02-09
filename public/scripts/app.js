@@ -2,49 +2,64 @@
 
 // const { getFeaturedItems } = require("../../db/queries/users");
 
-function toggleFavourite(event, id) {
+// function toggleFavourite(event, id) {
+//   event.preventDefault();
+//   console.log("THE ID", id);
+//   const icon = event.target;
+//   icon.classList.toggle("favourited");
+
+//   const data = { listing_id: id };
+
+//   // Send POST request to add/remove item from favourites list
+//   fetch("/favourites", {
+//     method: "POST",
+//     body: JSON.stringify(data),
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//   });
+// }
+
+function toggleFavourite(event, listingId) {
   event.preventDefault();
-  console.log("THE ID", id);
-  const icon = event.target;
-  icon.classList.toggle("favourited");
 
-  const data = { listing_id: id };
+  // Check if the heart icon is already favourited or not
+  const heartIcon = event.target;
+  let isFavourited = heartIcon.classList.contains("favourited");
 
-  // Send POST request to add/remove item from favourites list
-  fetch("/favourites", {
-    method: "POST",
-    body: JSON.stringify(data),
+  // Make the AJAX call to update the favourite status in the database
+  let url = "/favourites";
+  let method = "POST";
+  if (isFavourited) {
+    url = `/favourites/${listingId}`;
+    method = "DELETE";
+  }
+
+  fetch(url, {
+    method: method,
     headers: {
       "Content-Type": "application/json",
     },
-  });
-}
-
-function updateFavoriteStatus(itemId, addToFavorites) {
-  // Make a request to the server to update the favorite status of the item
-  fetch("/update-favorite-status", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      itemId,
-      addToFavorites,
-    }),
+    body: JSON.stringify({ listing_id: listingId }),
   })
     .then((response) => response.json())
     .then((data) => {
-      // Update the UI to reflect the updated favorite status of the item
-      if (data.success) {
-        const hearts = document.querySelectorAll(
-          `.fa-heart[onclick="updateFavoriteStatus('${itemId}', ${!addToFavorites})"]`
-        );
-        hearts.forEach((heart) => {
-          heart.style.color = addToFavorites ? "red" : "grey";
-        });
+      // Update the UI to reflect the change in favourite status
+      if (isFavourited) {
+        heartIcon.classList.remove("favourited");
+
+        // Remove the item from the favourites page, if applicable
+        const itemContainer = heartIcon.closest(".col-md-4");
+        const favCont = heartIcon.closest(".favorites");
+        if (itemContainer && favCont) {
+          itemContainer.remove();
+        }
       } else {
-        console.error("Failed to update favorite status of item", itemId);
+        heartIcon.classList.add("favourited");
       }
+    })
+    .catch((error) => {
+      console.error(error);
     });
 }
 

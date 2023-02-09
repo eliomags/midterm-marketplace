@@ -10,13 +10,18 @@ const getUsers = () => {
 };
 
 const getAllItems = function (
+  userId,
   limit = 6,
   options = { min_price: null, max_price: null }
 ) {
-  const queryParams = [];
+  const queryParams = [userId];
   let queryString = `
-    SELECT listings.*
+    SELECT listings.*,
+           COALESCE(user_favourites.user_id, 0) as favourite_status
     FROM listings
+    LEFT JOIN user_favourites
+      ON user_favourites.listing_id = listings.id
+      AND user_favourites.user_id = $1
     WHERE 1 = 1
     `;
 
@@ -190,8 +195,8 @@ const addFavourite = function (favourite) {
         return db.query(queryString, queryParams);
       }
     })
-    .then((response) => {
-      console.log("new favoritesaved");
+    .then((response2) => {
+      console.log(response2);
     })
     .catch((error) => {
       console.log(error);
@@ -255,10 +260,11 @@ const deleteListing = function (listing) {
 };
 
 const deleteFavourite = function (favourite) {
-  const queryParams = [favourite.id];
+  const queryParams = [favourite.listing_id, favourite.user_id];
+  console.log(queryParams);
   let queryString = `
     DELETE FROM user_favourites
-    WHERE user_favourites.id = $1;
+    WHERE user_favourites.listing_id = $1 AND user_favourites.user_id=$2;
     `;
 
   return db
