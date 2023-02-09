@@ -132,7 +132,7 @@ const getAdminListings = function (userId) {
 const getConversation = function (senderId, receiverId, listingId) {
   const queryParams = [senderId, receiverId, listingId];
   let queryString = `
-    SELECT user_messages.message, sender.name, receiver.name, listings.title
+    SELECT user_messages.message, sender.name, receiver.name, listings.title, sender.id AS sender_id, receiver.id AS receiver_id
     FROM user_messages
     JOIN users AS sender ON user_messages.sender = sender.id
     JOIN users AS receiver ON user_messages.receiver = receiver.id
@@ -146,6 +146,7 @@ const getConversation = function (senderId, receiverId, listingId) {
   return db
     .query(queryString, queryParams)
     .then((response) => {
+      console.log(response.rows, "RESPONSE.ROWS")
       return response.rows;
     })
     .catch((error) => {

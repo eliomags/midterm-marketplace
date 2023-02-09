@@ -26,16 +26,17 @@ router.get("/", (req, res) => {
 });
 
 // request for a specific message by product_id and user_i (buyer)
-router.get("/:listing_id", (req, res) => {
-  const senderId = req.query.senderId;
-  const receiverId = req.query.receiverId;
-  const listingId = req.params.listingId;
+router.get("/:listing_id/:senderId/:receiverId", (req, res) => {
+  const senderId = req.params.senderId;
+  const receiverId = req.params.receiverId;
+  const listingId = req.params.listing_id;
+
+  console.log(senderId, receiverId, listingId, "newconsolelog", req.query)
   const userId = req.cookies.user_id;
   let priceRange = {};
   priceRange.min_price = parseInt(req.query.min_price);
   priceRange.max_price = parseInt(req.query.min_price);
 
-  console.log(req.body, "req.query")
 
   getConversation(senderId, receiverId, listingId)
     .then((conversation) => {
@@ -65,12 +66,12 @@ router.get("/messages/:listing_id/new", (req, res) => {
 });
 
 // request for adding a new message
-router.post("/messages/:item_id", (req, res) => {
+router.post("/", (req, res) => {
   let message = {
-    sender: req.body.sender,
-    receiver: req.body.receiver,
-    listing: req.body.listing,
-    text: req.body.text,
+    sender: req.body.senderId,
+    receiver: req.body.receiverId,
+    listing: req.body.listingId,
+    text: req.body.message,
   };
   let userId = req.cookies.user_id;
   let priceRange = {};
@@ -78,8 +79,9 @@ router.post("/messages/:item_id", (req, res) => {
   priceRange.max_price = parseInt(req.query.min_price);
   createMessage(message)
     .then((result) => {
-      res.status(200).json({ result });
-      res.render("messages", { message, userId, priceRange });
+      // res.status(200).json({ result });
+      // res.render("messages", { message, userId, priceRange });
+      res.redirect(`/messages/${message.listing}/${message.sender}/${message.receiver}`)
     })
     .catch((error) => {
       console.log(error);
