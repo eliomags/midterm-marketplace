@@ -92,10 +92,11 @@ const getUserMessages = function (userId) {
       ELSE concat(user_messages.receiver::text, '', user_messages.sender::text)
     END)
   )
-  SELECT subquery.listing, subquery.sender, subquery.receiver, subquery.message_count, listings.title, users.name as sender_name
+  SELECT subquery.listing, subquery.sender, subquery.receiver, subquery.message_count, listings.title, sender_users.name as sender_name, receiver_users.name as receiver_name
   FROM subquery
   JOIN listings ON subquery.listing = listings.id
-  JOIN users ON subquery.sender = users.id;
+  JOIN users as sender_users ON subquery.sender = sender_users.id
+  JOIN users as receiver_users ON subquery.receiver = receiver_users.id;
 
     `;
 
