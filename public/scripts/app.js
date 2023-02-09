@@ -50,7 +50,8 @@ function toggleFavourite(event, listingId) {
 
         // Remove the item from the favourites page, if applicable
         const itemContainer = heartIcon.closest(".col-md-4");
-        if (itemContainer) {
+        const favCont = heartIcon.closest(".favorites");
+        if (itemContainer && favCont) {
           itemContainer.remove();
         }
       } else {
