@@ -40,8 +40,10 @@ router.post("/", (req, res) => {
   addFavourite(favourite)
     .then((result) => {
       console.log("result from addfavourite", result);
-      res.status(200).json({ result });
-      // res.redirect(`/items/${favourite.listing_id}`);
+      // get the updated list of favourites for the user
+      getUserFavourites(favourite.user_id).then((favourites) => {
+        res.status(200).json({ favourites });
+      });
     })
     .catch((error) => {
       console.log(error);
@@ -50,11 +52,15 @@ router.post("/", (req, res) => {
 });
 
 // request for removing a favourite by id
-//option via Delete
+// option via Delete
 router.delete("/:id", (req, res) => {
-  const favourite = { id: req.params.id };
+  let favourite = {
+    user_id: req.cookies.user_id,
+    listing_id: req.body.listing_id,
+  };
   deleteFavourite(favourite)
     .then((response) => {
+      console.log("mentor asked to add", response);
       res.send(response);
     })
     .catch((error) => {
@@ -63,7 +69,7 @@ router.delete("/:id", (req, res) => {
     });
 });
 
-//options via post request
+// // options via post request
 // router.post("/favourites/:id/remove", (req, res) => {
 //   const favourite = { id: req.params.id };
 //   deleteFavourite(favourite)
