@@ -69,6 +69,21 @@ router.post("/items/:id", (req, res) => {
     });
 });
 
+router.post("/items/:id/remove", (req, res) => {
+  let listing = {
+    id: req.params.id,
+    sold_status: req.body.sold_status,
+  };
+  removeSoldStatus(listing)
+    .then((result) => {
+      res.status(200).json({ result });
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).json({ error: error.message });
+    });
+});
+
 // request for viewing current user's items
 router.get("/", (req, res) => {
   const userId = req.cookies.user_id;

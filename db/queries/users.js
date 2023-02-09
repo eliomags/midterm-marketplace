@@ -240,6 +240,23 @@ const editSoldStatus = function (listing) {
       console.log(error);
     });
 };
+const removeSoldStatus = function (listing) {
+  const queryParams = [listing.sold_status];
+  let queryString = `
+    UPDATE listings
+    SET sold_status = FALSE
+    WHERE listings.id = $1;
+    `;
+
+  return db
+    .query(queryString, queryParams)
+    .then((response) => {
+      return response.rows;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
 
 const deleteListing = function (listing) {
   const queryParams = [listing.id];
@@ -359,4 +376,5 @@ module.exports = {
   deleteFavourite,
   getItemById,
   editItem,
+  removeSoldStatus
 };
