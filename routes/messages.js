@@ -29,14 +29,17 @@ router.get("/", (req, res) => {
 router.get("/:listing_id", (req, res) => {
   const senderId = req.query.senderId;
   const receiverId = req.query.receiverId;
-  const listingId = req.query.listingId;
-  const userId = res.cookie.user_id;
+  const listingId = req.params.listingId;
+  const userId = req.cookies.user_id;
   let priceRange = {};
   priceRange.min_price = parseInt(req.query.min_price);
   priceRange.max_price = parseInt(req.query.min_price);
 
+  console.log(req.body, "req.query")
+
   getConversation(senderId, receiverId, listingId)
     .then((conversation) => {
+      console.log(conversation, "conversation")
       res.render("conversation", {
         conversation,
         userId,
