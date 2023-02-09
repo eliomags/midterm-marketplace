@@ -57,6 +57,12 @@
       font-size: 0.8em;
     }
 
+    .admin-buttons{
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+
 
   </style>
 
@@ -74,6 +80,11 @@
             <h5 class="card-title"><%= listings[i].name %></h5>
             <p class="card-text">$<%= listings[i].price %></p>
             <p class="card-text"><%= listings[i].description %></p>
+            <div class="admin-buttons">
+            <button>Messages</button>
+            <button>Delete</button>
+            <button>Mark as Sold</button>
+            </div>
           </div>
           <!-- Font Awesome Heart Icon
           <span class="heart-icon" onclick="toggleFavourite(event)">
