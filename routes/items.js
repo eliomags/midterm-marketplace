@@ -12,7 +12,7 @@ router.get("/", (req, res) => {
   if (req.query.max_price) {
     options.max_price = parseInt(req.query.max_price);
   }
-  Promise.all([getFeaturedItems(), getAllItems(6, options)])
+  Promise.all([getFeaturedItems(), getAllItems(userId, 12, options)])
     .then(([featuredItems, allItems]) => {
       console.log(featuredItems);
       res.render("items", {

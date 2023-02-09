@@ -76,7 +76,7 @@
             <p class="card-text"><%= favourites[i].description %></p>
           </div>
           <!-- Font Awesome Heart Icon -->
-            <i class="heart-icon fas fa-heart" onclick="ToggleFavourite(event, '<%= favourites[i].id %>')"></i>
+            <i class="heart-icon favourited fas fa-heart" onclick="toggleFavourite(event, '<%= favourites[i].id %>')"></i>
         </div>
       </div>
       <% } %>
