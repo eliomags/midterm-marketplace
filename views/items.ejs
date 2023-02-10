@@ -113,13 +113,14 @@
     <% for (let i = 0; i < featuredItems.length; i++) { %>
       <div class="col-md-4 mb-3">
         <div class="card">
-          <img class="sold-image <%=featuredItems[i].sold_status ? 'sold-image-visable' : '' %>" src="/assets/sold.png")>
           <img class="imgitems" src="<%= featuredItems[i].photo_1 %>" alt="product thumbnail">
           <div class="card-body">
             <h5 class="card-title"><%= featuredItems[i].title %></h5>
             <p class="card-text price">$<%= featuredItems[i].price %></p>
             <p class="card-text"><%= featuredItems[i].description %></p>
           </div>
+
+
           <div class="message-fav">
             <%= (allItems[i].owner_id === userId) ? hideButton() : "" %>
             <button id="hiding" class="contact" onclick="window.location.href='/messages/<%= allItems[i].id %>/<%= userId %>/<%= allItems[i].owner_id %>'" >Contact</button>
@@ -135,7 +136,6 @@
       <% for (let i = 0; i < allItems.length; i++) { %>
         <div class="col-md-4 mb-3">
           <div class="card allitems">
-            <img class="sold-image <%=allItems[i].sold_status ? 'sold-image-visable' : '' %>" src="/assets/sold.png")>
             <img class="imgitems" src="<%= allItems[i].photo_1 %>" alt="product thumbnail">
             <div class="card-body">
               <h5 class="card-title"><%= allItems[i].title %></h5>

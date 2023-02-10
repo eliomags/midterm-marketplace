@@ -109,12 +109,13 @@ router.get("/", (req, res) => {
 // Delete
 // request for deleting a specific item by id
 //options via post request
-router.post("/items/:id/delete", (req, res) => {
+router.delete("/items/:id/delete", (req, res) => {
   const listing = { id: req.params.id };
 
   deleteListing(listing)
-    .then((response) => {
-      res.redirect("/admin");
+    .then(() => {
+      window.location.href = '/admin';
+      res.redirect( "/admin");
     })
     .catch((error) => {
       console.log(error);
