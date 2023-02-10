@@ -26,13 +26,15 @@
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
 
   <style>
+
     .heart-icon {
       position: absolute;
       bottom: 0;
       right: 0;
-      font-size: 18px;
+      font-size: 24px;
       cursor: pointer;
-      margin-right: 5%;
+
+      padding: 0 10px 10px 10px;
     }
     .heart-icon.fas {
       color: lightgray;
@@ -46,19 +48,60 @@
       object-fit: cover;
     }
     .card {
-      width: 300px;
-      height: 400px;
+      width: 350px;
+      height: 450px;
+      border-radius: 0 0 10px 10px;
+      border: 1px solid #48004882;
     }
     .card-body {
-      height: 150px;
+      height: 200px;
       overflow: hidden;
+      font-size: small;
     }
     .card-text {
-      font-size: 0.8em;
+      font-size: 1em;
     }
 
+    .price {
+      font-weight: bold;
+      font-size: 1.2em;
+      color: #480082;
+    }
+
+    .message-fav{
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      padding: 0 10px 10px 10px;
+    }
+    .message-fav button {
+      padding: 10px 20px;
+      border-radius: 20px;
+      background-color: #480082;
+      color: #fff;
+      border: none;
+      font-size: 11px;
+      cursor: pointer;
+      transition: all 0.3s ease-in-out;
+    }
+    .message-fav button:hover {
+      background-color: #1e73be;
+      font-size: large;
+    }
+    .heart-icon:hover {
+      font-size: 30px;
+    }
+.inactive {
+  display: none;
+}
 
   </style>
+
+  <script>
+    function hideButton() {
+      $("#hiding").hide();
+    }
+    </script>
 
 </head>
 <body>
@@ -72,11 +115,17 @@
         <div class="card">
           <img class="imgitems" src="<%= featuredItems[i].photo_1 %>" alt="product thumbnail">
           <div class="card-body">
-            <h5 class="card-title"><%= featuredItems[i].name %></h5>
-            <p class="card-text">$<%= featuredItems[i].price %></p>
+            <h5 class="card-title"><%= featuredItems[i].title %></h5>
+            <p class="card-text price">$<%= featuredItems[i].price %></p>
             <p class="card-text"><%= featuredItems[i].description %></p>
           </div>
-          <!-- Font Awesome Heart Icon -->
+
+
+          <div class="message-fav">
+            <%= (allItems[i].owner_id === userId) ? hideButton() : "" %>
+            <button id="hiding" class="contact" onclick="window.location.href='/messages/<%= allItems[i].id %>/<%= userId %>/<%= allItems[i].owner_id %>'" >Contact</button>
+
+        </div>
 
         </div>
       </div>
@@ -89,17 +138,22 @@
           <div class="card allitems">
             <img class="imgitems" src="<%= allItems[i].photo_1 %>" alt="product thumbnail">
             <div class="card-body">
-              <h5 class="card-title"><%= allItems[i].name %></h5>
-              <p class="card-text">$<%= allItems[i].price %></p>
+              <h5 class="card-title"><%= allItems[i].title %></h5>
+              <p class="card-text price">$<%= allItems[i].price %></p>
               <p class="card-text"><%= allItems[i].description %></p>
-                <!-- Font Awesome Heart Icon -->
-                <% if (allItems[i].favourite_status === 0) {%>
-                <i class="heart-icon fas fa-heart" onclick="toggleFavourite(event, '<%= allItems[i].id %>')"></i>
-                <%} else {%>
-                  <i class="heart-icon favourited fas fa-heart" onclick="toggleFavourite(event, '<%= allItems[i].id %>')"></i>
-                  <%}%>
-              </span>
+              <!-- Font Awesome Heart Icon -->
+              <!-- </span> -->
             </div>
+            <% if (allItems[i].favourite_status === 0) {%>
+              <i class="heart-icon fas fa-heart" onclick="toggleFavouriteItems(event, '<%= allItems[i].id %>')"></i>
+              <%} else {%>
+                <i class="heart-icon favourited fas fa-heart" onclick="toggleFavourite(event, '<%= allItems[i].id %>')"></i>
+                <%}%>
+                <div class="message-fav">
+                    <%= (allItems[i].owner_id === userId) ? hideButton() : "" %>
+                    <button id="hiding" class="contact" onclick="window.location.href='/messages/<%= allItems[i].id %>/<%= userId %>/<%= allItems[i].owner_id %>'" >Contact</button>
+
+                </div>
         </div>
       </div>
       <% } %>

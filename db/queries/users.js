@@ -35,6 +35,8 @@ const getAllItems = function (
     queryString += `AND price <= $${queryParams.length} `;
   }
 
+  // queryString += `AND sold_status = false `;
+
   queryParams.push(limit);
   queryString += `ORDER BY price DESC
       LIMIT $${queryParams.length};`;
@@ -75,6 +77,7 @@ const getUserFavourites = function (userId) {
     JOIN user_favourites ON user_favourites.listing_id = listings.id
     WHERE user_favourites.user_id = $1;
     `;
+  //if to exclude SOLD items then add `AND sold_status = false;` to where
 
   return db
     .query(queryString, queryParams)
@@ -146,7 +149,6 @@ const getConversation = function (senderId, receiverId, listingId) {
     JOIN users AS receiver ON user_messages.receiver = receiver.id
     JOIN listings ON user_messages.listing = listings.id
     WHERE (sender.id = $1 AND receiver.id = $2)
-    OR (sender.id = $2 AND receiver.id = $1)
     AND listings.id = $3
     ORDER BY user_messages.time_sent DESC;
     `;
@@ -154,7 +156,7 @@ const getConversation = function (senderId, receiverId, listingId) {
   return db
     .query(queryString, queryParams)
     .then((response) => {
-      console.log(response.rows, "RESPONSE.ROWS")
+      console.log(response.rows, "RESPONSE.ROWS");
       return response.rows;
     })
     .catch((error) => {
@@ -245,7 +247,7 @@ const editSoldStatus = function (listing) {
     });
 };
 const updateSoldStatus = function (listing) {
-  const queryParams = [listing.id,!listing.sold_status];
+  const queryParams = [listing.id, !listing.sold_status];
   let queryString = `
     UPDATE listings
     SET sold_status = $2
@@ -380,5 +382,5 @@ module.exports = {
   deleteFavourite,
   getItemById,
   editItem,
-  updateSoldStatus
+  updateSoldStatus,
 };

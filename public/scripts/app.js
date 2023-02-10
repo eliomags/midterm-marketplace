@@ -20,7 +20,7 @@
 //   });
 // }
 
-function toggleFavourite(event, listingId) {
+function toggleFavouriteItems(event, listingId) {
   event.preventDefault();
 
   // Check if the heart icon is already favourited or not
@@ -63,6 +63,49 @@ function toggleFavourite(event, listingId) {
     });
 }
 
+function toggleFavouriteFavourites(event, listingId) {
+  event.preventDefault();
+
+  // Check if the heart icon is already favourited or not
+  const heartIcon = event.target;
+  let isFavourited = heartIcon.classList.contains("favourited");
+
+  // Make the AJAX call to update the favourite status in the database
+  let url = "/favourites";
+  let method = "POST";
+  if (isFavourited) {
+    url = `/favourites/${listingId}`;
+    method = "DELETE";
+  }
+
+  fetch(url, {
+    method: method,
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ listing_id: listingId }),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      // Update the UI to reflect the change in favourite status
+      if (isFavourited) {
+        heartIcon.classList.remove("favourited");
+
+        // Remove the item from the favourites page, if applicable
+        const itemContainer = heartIcon.closest(".col-md-4");
+        const favCont = heartIcon.closest(".favorites");
+        if (itemContainer) {
+          itemContainer.remove();
+        }
+      } else {
+        heartIcon.classList.add("favourited");
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
+
 //drop down in partial header to send selection to get request
 function submitForm() {
   const select = document.getElementById("price-range-select");
@@ -83,3 +126,24 @@ function submitForm() {
 
   window.location.href = `/items?${queryParams.join("&")}`;
 }
+
+document.querySelector("#searchBtn").addEventListener("click", function () {
+  let searchKeyword = document
+    .querySelector("#searchInput")
+    .value.toLowerCase();
+  let cards = document.querySelectorAll(".card");
+  cards.forEach(function (card) {
+    let title = card.querySelector(".card-title").textContent.toLowerCase();
+    let receiverName = card
+      .querySelector(".card-text:nth-child(2)")
+      .textContent.toLowerCase();
+    if (
+      !title.includes(searchKeyword) &&
+      !receiverName.includes(searchKeyword)
+    ) {
+      card.style.display = "none";
+    } else {
+      card.style.display = "";
+    }
+  });
+});
