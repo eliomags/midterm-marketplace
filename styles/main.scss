@@ -36,6 +36,12 @@ nav {
     font-size: large;
   }
   .logo {
+    padding: 5px 10px;
+    border-radius: 20px;
+    background-color: white;
+    color:indigo;
+    border: none;
+    font-size: 10px;
     margin-right: 5em;
     margin-left: 2em;
     font-size: 40px;
@@ -47,6 +53,9 @@ nav {
     border: 0;
     border-radius: 2%;
   }
+  .logout-button:hover{
+    background-color: #1e73be;
+  }
 }
 
 .sold-image{
@@ -57,6 +66,23 @@ nav {
 
 .sold-image-visable{
   opacity:1;
+}
+
+.logout-button{
+  padding: 10px 20px;
+      border-radius: 20px;
+      background-color: white;
+      color:indigo;
+      border: none;
+      font-size: 10px;
+}
+.login-button{
+  padding: 10px 20px;
+      border-radius: 20px;
+      background-color: white;
+      color:indigo;
+      border: none;
+      font-size: 10px;
 }
 
 
