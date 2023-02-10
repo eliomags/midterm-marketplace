@@ -20,14 +20,24 @@
     />
     <script src="/vendor/jquery-3.0.0.js"></script>
     <script defer src="/scripts/app.js"></script>
+    <style>
+      .btn-primary {
+        background-color: #480082;
+        border-color: #480082;
+      }
+    </style>
   </head>
   <body>
     <%- include('partials/_header') %>
     <div class="container mt-5">
-      <h2 class="text-center mb-3">Conversation</h2>
+      <% if (conversation.length === 0) { %>
+        <h2 class="text-center mb-3">Contact seller</h2>
+      <% } else { %>
+      <h2 class="text-center mb-3"><%= conversation[0].title %></h2>
+      <% } %>
       <% for (let i = 0; i < conversation.length; i++) { %>
-        <div class="card mb-3">
-          <div class="card-body">
+         <div class="card mb-3" style="border: 0; border-radius: 10px; background-color: <% if (i % 2 === 0) { %>#f5f5f5<% } else { %>#cbb3de<% } %>;">
+      <div class="card-body" style="text-align: <% if (i % 2 === 0) { %>left<% } else { %>right<% } %>;">
             <h5 class="card-title">
               Sent By
               <%= conversation[i].sender_name %>

@@ -48,7 +48,9 @@
     }
     .card {
       width: 300px;
-      height: 400px;
+      height: 420px;
+      border-radius: 0 0 10px 10px;
+      border: 1px solid #48004882;
     }
     .card-body {
       height: 150px;
@@ -58,12 +60,31 @@
       font-size: 0.8em;
     }
 
+    .price {
+      font-weight: bold;
+      font-size: 1.2em;
+      color: #480082;
+    }
+
     .admin-buttons{
       display: flex;
       flex-direction: row;
       justify-content: space-between;
+      padding: 0 10px 10px 10px;
     }
-
+    .admin-buttons button {
+      padding: 10px 20px;
+      border-radius: 20px;
+      background-color: #480082;
+      color: #fff;
+      border: none;
+      font-size: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease-in-out;
+    }
+    .admin-buttons button:hover {
+      background-color: #1e73be;
+    }
 
   </style>
 
@@ -82,16 +103,16 @@
             <h5 class="card-title"><%= listings[i].name %></h5>
             <p class="card-text">$<%= listings[i].price %></p>
             <p class="card-text"><%= listings[i].description %></p>
-            <div class="admin-buttons">
-            <button>Messages</button>
-            <button>Delete</button>
-            <button class="sold-button" name="<%= listings[i].id %>">Mark as Sold</button>
-            </div>
+          </div>
+          <div class="admin-buttons">
+          <button onclick="window.location.href='/messages'" >Messages</button>
+          <button>Delete</button>
+          <button class="sold-button" name="<%= listings[i].id %>">Mark as Sold</button>
           </div>
           <!-- Font Awesome Heart Icon
           <span class="heart-icon" onclick="toggleFavourite(event)">
             <i class="fas fa-heart"></i> -->
-          </span>
+          <!-- </span> -->
         </div>
       </div>
       <% } %>

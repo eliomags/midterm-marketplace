@@ -3,6 +3,7 @@ nav {
   height: 100px;
   a {
     color: white;
+    font-size: large;
   }
   .username {
     width: 300px;
@@ -12,10 +13,38 @@ nav {
     width: 60%;
     display: flex;
     justify-content: space-between;
+    font-size: large;
+    font-weight: bold;
+  }
+  .login-button {
+    margin-right: 2em;
+    font-size: large;
+    font-weight: 150;
+    color: #480082;
+  }
+
+  .logout-button {
+    font-size: large;
+    font-weight: 100;
+    color: #480082;
+  }
+  .navbar-left {
+    width: 40%;
+    display: flex;
+    justify-content: normal;
+    font-size: large;
   }
   .logo {
     margin-right: 5em;
     margin-left: 2em;
+    font-size: 40px;
+    font-weight: bold
+  }
+  .dropdown{
+    font-size: large;
+    color: #480082;
+    border: 0;
+    border-radius: 2%;
   }
 }
 
@@ -49,3 +78,5 @@ body main {
   width: 200px; /* set desired width */
   object-fit: cover; /* maintain aspect ratio */
 }
+
+
