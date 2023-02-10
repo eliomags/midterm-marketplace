@@ -14,7 +14,8 @@ router.get("/", (req, res) => {
   }
   Promise.all([getFeaturedItems(), getAllItems(userId, 12, options)])
     .then(([featuredItems, allItems]) => {
-      console.log(featuredItems);
+      // console.log(featuredItems);
+      console.log(allItems, "allitems")
       res.render("items", {
         featuredItems,
         allItems,

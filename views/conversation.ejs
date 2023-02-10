@@ -29,6 +29,7 @@
         <div class="card mb-3">
           <div class="card-body">
             <h5 class="card-title">
+              Sent By
               <%= conversation[i].sender_name %>
             </h5>
             <p class="card-text">
@@ -42,12 +43,12 @@
           </div>
         </div>
       <% } %>
-      <form action="/messages/<%= listingId %>" method="POST">
+      <form action="/messages" method="POST">
         <div class="form-group">
           <textarea class="form-control" name="message" rows="3"></textarea>
         </div>
         <input type="hidden" name="senderId" value="<%= userId %>">
-        <input type="hidden" name="receiverId" value="<%= receiverId %>">
+        <input type="hidden" name="receiverId" value="<%= receiverId === userId ? senderId : receiverId %>">
         <input type="hidden" name="listingId" value="<%= listingId %>">
         <button type="submit" class="btn btn-primary">Send</button>
       </form>
