@@ -41,10 +41,26 @@
     </select>
   </div>
    <div class="navbar-right">
-    <a class="favourites" href="/favourites">Favourites</a>
-    <a class="messages" href="/messages">Messages</a>
-    <a class="posted-ads" href="/admin">Posted Ads</a>
-    <a class="post-ad" href="/postad">Post Ad</a>
+
+  <div class= "favourites-tab">
+  <i class="fa-sharp fa-regular fa-heart"></i>
+  <a class="favourites" href="/favourites">Favourites</a>
+  </div>
+
+  <div class= "message-tab">
+  <i class="fa-regular fa-message"></i>
+  <a class="messages" href="/messages">Messages</a>
+  </div>
+
+  <div class= "posted-tab">
+  <i class="fa-solid fa-bars"></i>
+  <a class="posted-ads" href="/admin">Posted Ads</a>
+  </div>
+
+  <div class= "post-tab">
+  <i class="fa-solid fa-plus"></i>
+  <a class="post-ad" href="/postad">Post Ad</a>
+  </div>
 
     <!-- <img class="profile-picture" src="TBT" /> -->
     <form class="logout-form" action="/api/users/logout" method="POST">
