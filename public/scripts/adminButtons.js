@@ -2,6 +2,7 @@ $(document).ready(function () {
   console.log("ready");
   // --- our code goes here ---
 
+
   const $sold = $(".sold-button");
 
   $sold.on("click", function (event) {
@@ -23,4 +24,27 @@ $(document).ready(function () {
       }).then((response) => response.json());
     }
   });
+
+  const $delete = $(".delete-button");
+
+  $delete.on("click", function (event) {
+    event.preventDefault();
+    const listingId = event.target.name;
+
+    if (listingId) {
+      url = `/admin/items/${listingId}/delete`;
+      method = "DELETE";
+      fetch(url, {
+        method: method,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ listing_id: listingId }),
+      })
+        .then((response) => (response.json()))
+        .catch((error) => console.error("Error:", error));
+    }
+    window.location.href = '/admin';
+  });
+
 });

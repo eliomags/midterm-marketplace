@@ -78,13 +78,13 @@
         <div class="card" id ="<%= listings[i].id %>">
           <img class="sold-image <%=listings[i].sold_status ? 'sold-image-visable' : '' %>" src="/assets/sold.png")>
           <img class="imgitems" src="<%= listings[i].photo_1 %>" alt="product thumbnail">
-          <div class="card-body">
+          <div class="card-body item">
             <h5 class="card-title"><%= listings[i].name %></h5>
             <p class="card-text">$<%= listings[i].price %></p>
             <p class="card-text"><%= listings[i].description %></p>
             <div class="admin-buttons">
             <button>Messages</button>
-            <button>Delete</button>
+            <button class="delete-button" name="<%= listings[i].id %>">Delete</button>
             <button class="sold-button" name="<%= listings[i].id %>">Mark as Sold</button>
             </div>
           </div>
