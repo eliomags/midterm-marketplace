@@ -21,6 +21,7 @@
   />
   <script src="/vendor/jquery-3.0.0.js"></script>
   <script defer src="/scripts/app.js"></script>
+  <script type="text/javascript"src="/scripts/adminButtons.js"></script>
 
   <!-- For Font Awesome 5 (Free version) -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
@@ -74,7 +75,8 @@
           <h2 class="col-12 text-center mb-3">My Items</h2>
     <% for (let i = 0; i < listings.length; i++) { %>
       <div class="col-md-4 mb-3">
-        <div class="card">
+        <div class="card" id ="<%= listings[i].id %>">
+          <img class="sold-image <%=listings[i].sold_status ? 'sold-image-visable' : '' %>" src="/assets/sold.png")>
           <img class="imgitems" src="<%= listings[i].photo_1 %>" alt="product thumbnail">
           <div class="card-body">
             <h5 class="card-title"><%= listings[i].name %></h5>
@@ -83,7 +85,7 @@
             <div class="admin-buttons">
             <button>Messages</button>
             <button>Delete</button>
-            <button>Mark as Sold</button>
+            <button class="sold-button" name="<%= listings[i].id %>">Mark as Sold</button>
             </div>
           </div>
           <!-- Font Awesome Heart Icon

@@ -7,6 +7,7 @@ const {
   addListing,
   editItem,
   getItemById,
+  updateSoldStatus
 } = require("../db/queries/users");
 
 // Code to handle request for editing a specific item by id
@@ -60,6 +61,21 @@ router.post("/items/:id", (req, res) => {
     sold_status: req.body.sold_status,
   };
   editSoldStatus(listing)
+    .then((result) => {
+      res.status(200).json({ result });
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).json({ error: error.message });
+    });
+});
+
+router.put("/items/:id/update", (req, res) => {
+  let listing = {
+    id: req.params.id,
+    sold_status: req.body.sold_status,
+  };
+  updateSoldStatus(listing)
     .then((result) => {
       res.status(200).json({ result });
     })
