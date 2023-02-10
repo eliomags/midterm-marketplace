@@ -25,48 +25,48 @@ router.get("/", (req, res) => {
     });
 });
 
-/*
+
 // request for a specific message by product_id and user_i (buyer)
-router.get("/:listing_id/:senderId/:receiverId", (req, res) => {
-  const senderId = req.params.senderId;
-  const receiverId = req.params.receiverId;
-  const listingId = req.params.listing_id;
+// router.get("/:listing_id/:senderId/:receiverId", (req, res) => {
+//   const senderId = req.params.senderId;
+//   const receiverId = req.params.receiverId;
+//   const listingId = req.params.listing_id;
 
-  console.log(senderId, receiverId, listingId, "newconsolelog", req.query);
-  const userId = req.cookies.user_id;
-  let priceRange = {};
-  priceRange.min_price = parseInt(req.query.min_price);
-  priceRange.max_price = parseInt(req.query.min_price);
+//   console.log(senderId, receiverId, listingId, "newconsolelog", req.query);
+//   const userId = req.cookies.user_id;
+//   let priceRange = {};
+//   priceRange.min_price = parseInt(req.query.min_price);
+//   priceRange.max_price = parseInt(req.query.min_price);
 
-  getConversation(senderId, receiverId, listingId)
-    .then((conversation) => {
-      console.log(conversation, "conversation");
-      res.render("conversation", {
-        conversation,
-        userId: userId,
-        senderId,
-        listingId,
-        receiverId,
-        priceRange,
-      });
-    })
-    .catch((error) => {
-      console.log(error);
-      res.send("Error");
-    });
-});
+//   getConversation(senderId, receiverId, listingId)
+//     .then((conversation) => {
+//       console.log(conversation, "conversation");
+//       res.render("conversation", {
+//         conversation,
+//         userId: userId,
+//         senderId,
+//         listingId,
+//         receiverId,
+//         priceRange,
+//       });
+//     })
+//     .catch((error) => {
+//       console.log(error);
+//       res.send("Error");
+//     });
+// });
 
-// request for creating a new message
-router.get("/messages/:listing_id/new", (req, res) => {
-  const item_id = req.params.listing_id;
-  const userId = req.cookies.user_id;
-  let priceRange = {};
-  priceRange.min_price = parseInt(req.query.min_price);
-  priceRange.max_price = parseInt(req.query.min_price);
-  res.render("newmessage", { item_id, userId, priceRange });
-});
+// // request for creating a new message
+// router.get("/messages/:listing_id/new", (req, res) => {
+//   const item_id = req.params.listing_id;
+//   const userId = req.cookies.user_id;
+//   let priceRange = {};
+//   priceRange.min_price = parseInt(req.query.min_price);
+//   priceRange.max_price = parseInt(req.query.min_price);
+//   res.render("newmessage", { item_id, userId, priceRange });
+// });
 
-/*
+
 // request for adding a new message
 router.post("/", (req, res) => {
   let message = {
@@ -92,7 +92,7 @@ router.post("/", (req, res) => {
       res.status(500).json({ error: error.message });
     });
 });
-*/
+
 //to check if there is an existing conversation or create a new one in the router.get for "/:listing_id/:senderId/:receiverId"
 router.get("/:listing_id/:senderId/:receiverId", (req, res) => {
   console.log("test1");
