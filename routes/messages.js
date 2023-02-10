@@ -44,6 +44,7 @@ router.get("/:listing_id/:senderId/:receiverId", (req, res) => {
       res.render("conversation", {
         conversation,
         userId,
+        senderId,
         listingId,
         receiverId,
         priceRange,
