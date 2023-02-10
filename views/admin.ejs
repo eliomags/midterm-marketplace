@@ -87,6 +87,11 @@
       background-color: #1e73be;
     }
 
+    #price {
+    font-weight: bold;
+    font-size: 1.2em;
+    color: #480082;
+}
   </style>
 
 </head>
@@ -94,7 +99,7 @@
   <%- include('partials/_header') %>
       <div class="container mt-5">
         <div class="row">
-          <h2 class="col-12 text-center mb-3">My Items</h2>
+          <h2 class="col-12 text-center mb-3">MY ITEMS</h2>
     <% for (let i = 0; i < listings.length; i++) { %>
       <div class="col-md-4 mb-3">
         <div class="card" id ="<%= listings[i].id %>">
@@ -102,7 +107,7 @@
           <img class="imgitems" src="<%= listings[i].photo_1 %>" alt="product thumbnail">
           <div class="card-body item">
             <h5 class="card-title"><%= listings[i].name %></h5>
-            <p class="card-text">$<%= listings[i].price %></p>
+            <p id="price"class="card-text">$<%= listings[i].price %></p>
             <p class="card-text"><%= listings[i].description %></p>
           </div>
           <div class="admin-buttons">
