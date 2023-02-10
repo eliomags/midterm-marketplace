@@ -41,10 +41,11 @@ $(document).ready(function () {
         },
         body: JSON.stringify({ listing_id: listingId }),
       })
-        .then((response) => (response.json()))
+        .then((response) => (
+          window.location.href = 'http://localhost:8080/admin'
+        ))
         .catch((error) => console.error("Error:", error));
     }
-    window.location.href = '/admin';
   });
 
 });
