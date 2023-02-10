@@ -121,7 +121,9 @@ const getAdminListings = function (userId) {
     SELECT listings.*
     FROM listings
     JOIN users on listings.owner_id = users.id
-    WHERE users.id = $1;
+    WHERE users.id = $1
+    ORDER BY listings.id;
+
     `;
 
   return db
@@ -240,11 +242,11 @@ const editSoldStatus = function (listing) {
       console.log(error);
     });
 };
-const removeSoldStatus = function (listing) {
-  const queryParams = [listing.sold_status];
+const updateSoldStatus = function (listing) {
+  const queryParams = [listing.id,!listing.sold_status];
   let queryString = `
     UPDATE listings
-    SET sold_status = FALSE
+    SET sold_status = $2
     WHERE listings.id = $1;
     `;
 
@@ -376,5 +378,5 @@ module.exports = {
   deleteFavourite,
   getItemById,
   editItem,
-  removeSoldStatus
+  updateSoldStatus
 };
