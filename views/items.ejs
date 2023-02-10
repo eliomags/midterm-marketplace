@@ -95,6 +95,16 @@
   display: none;
 }
 
+.sold-image{
+  opacity:0;
+  position:absolute;
+  height: 200px;
+  width: 350px
+}
+
+.sold-image-visable{
+  opacity:1;
+}
   </style>
 
   <script>
@@ -113,6 +123,7 @@
     <% for (let i = 0; i < featuredItems.length; i++) { %>
       <div class="col-md-4 mb-3">
         <div class="card">
+          <img class="sold-image <%=featuredItems[i].sold_status ? 'sold-image-visable' : '' %>" src="/assets/sold.png")>
           <img class="imgitems" src="<%= featuredItems[i].photo_1 %>" alt="product thumbnail">
           <div class="card-body">
             <h5 class="card-title"><%= featuredItems[i].title %></h5>
@@ -136,6 +147,7 @@
       <% for (let i = 0; i < allItems.length; i++) { %>
         <div class="col-md-4 mb-3">
           <div class="card allitems">
+            <img class="sold-image <%=allItems[i].sold_status ? 'sold-image-visable' : '' %>" src="/assets/sold.png")>
             <img class="imgitems" src="<%= allItems[i].photo_1 %>" alt="product thumbnail">
             <div class="card-body">
               <h5 class="card-title"><%= allItems[i].title %></h5>
