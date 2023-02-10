@@ -111,7 +111,7 @@
       <div class="card" style="border: 0; border-radius: 10px; background-color: <% if (i % 2 === 0) { %>#f5f5f5<% } else { %>#cbb3de<% } %>" onclick="window.location='/messages/<%= messages[i].listing %>/<%= messages[i].sender %>/<%= messages[i].receiver %>'">
         <div class="card-body">
           <h5 class="card-title">Item: <%= messages[i].title %></h5>
-          <p class="card-text">Other User: <%= messages[i].receiver_name %></p>
+          <p class="card-text">Other User: <%= messages[i].receiver == userId ? messages[i].sender_name : messages[i].receiver_name %></p>
           <p class="card-text">Number of messages: <%= messages[i].message_count %></p>
         </div>
       </div>

@@ -148,7 +148,7 @@ const getConversation = function (senderId, receiverId, listingId) {
     JOIN users AS sender ON user_messages.sender = sender.id
     JOIN users AS receiver ON user_messages.receiver = receiver.id
     JOIN listings ON user_messages.listing = listings.id
-    WHERE (sender.id = $1 AND receiver.id = $2)
+    WHERE ((sender.id = $1 AND receiver.id = $2) OR (sender.id = $2 AND receiver.id = $1))
     AND listings.id = $3
     ORDER BY user_messages.time_sent DESC;
     `;

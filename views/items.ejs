@@ -133,8 +133,8 @@
 
 
           <div class="message-fav">
-            <%= (allItems[i].owner_id === userId) ? hideButton() : "" %>
-            <button id="hiding" class="contact" onclick="window.location.href='/messages/<%= allItems[i].id %>/<%= userId %>/<%= allItems[i].owner_id %>'" >Contact</button>
+            <%= (featuredItems[i].owner_id === userId) ? hideButton() : "" %>
+            <button id="hiding" class="contact" onclick="window.location.href='/messages/<%= featuredItems[i].id %>/<%= userId %>/<%= featuredItems[i].owner_id %>'" >Contact</button>
 
         </div>
 

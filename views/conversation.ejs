@@ -38,8 +38,8 @@
       <h2 class="text-center mb-3"><%= conversation[0].title %></h2>
       <% } %>
       <% for (let i = 0; i < conversation.length; i++) { %>
-         <div class="card mb-3" style="border: 0; border-radius: 10px; background-color: <% if (i % 2 === 0) { %>#f5f5f5<% } else { %>#cbb3de<% } %>;">
-      <div class="card-body" style="text-align: <% if (i % 2 === 0) { %>left<% } else { %>right<% } %>;">
+         <div class="card mb-3" style="border: 0; border-radius: 10px; background-color: <% if (userId == conversation[i].receiver_id) { %>#f5f5f5<% } else { %>#cbb3de<% } %>;">
+      <div class="card-body" style="text-align: <% if (userId == conversation[i].receiver_id) { %>left<% } else { %>right<% } %>;">
             <h5 class="card-title">
               Sent By
               <%= conversation[i].sender_name %>
