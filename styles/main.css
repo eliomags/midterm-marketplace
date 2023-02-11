@@ -20,6 +20,7 @@ nav .logo {
   margin-left: 2em;
 }
 
+
 body main {
   display: flex;
   flex-direction: row;
@@ -27,7 +28,7 @@ body main {
   align-items: flex-start;
   min-height: 100vh;
   background:white;
-  background-image: url("https://cdn.vectorstock.com/i/1000x1000/55/32/tea-cup-set-vector-2195532.webp");
+  background-image:url(assets/background2.png);
   padding-top: 2rem;
 }
 body main .search-button {
