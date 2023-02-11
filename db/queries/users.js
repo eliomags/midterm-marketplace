@@ -89,8 +89,8 @@ const getUserFavourites = function (userId) {
     });
 };
 
-const getUserMessages = function (userId) {
-  const queryParams = [userId];
+const getUserMessages = function (userId, listingid) {
+  let queryParams = [userId];
   let queryString = `
   WITH subquery AS (
     SELECT user_messages.listing, MIN(user_messages.sender) AS sender, MAX(user_messages.receiver) AS receiver, COUNT(*) as message_count
@@ -106,13 +106,37 @@ const getUserMessages = function (userId) {
   JOIN listings ON subquery.listing = listings.id
   JOIN users as sender_users ON subquery.sender = sender_users.id
   JOIN users as receiver_users ON subquery.receiver = receiver_users.id;
-
     `;
 
   return db
     .query(queryString, queryParams)
     .then((response) => {
-      return response.rows;
+      if(listingid) {
+        queryParams = [userId, listingid];
+        queryString = `
+        WITH subquery AS (
+          SELECT user_messages.listing, MIN(user_messages.sender) AS sender, MAX(user_messages.receiver) AS receiver, COUNT(*) as message_count
+          FROM user_messages
+          WHERE (user_messages.sender = $1 OR user_messages.receiver = $1)
+          AND user_messages.listing = $2
+          GROUP BY user_messages.listing, (CASE
+            WHEN user_messages.sender < user_messages.receiver THEN concat(user_messages.sender::text, '', user_messages.receiver::text)
+            ELSE concat(user_messages.receiver::text, '', user_messages.sender::text)
+          END)
+        )
+        SELECT subquery.listing, subquery.sender, subquery.receiver, subquery.message_count, listings.title, sender_users.name as sender_name, receiver_users.name as receiver_name
+        FROM subquery
+        JOIN listings ON subquery.listing = listings.id
+        JOIN users as sender_users ON subquery.sender = sender_users.id
+        JOIN users as receiver_users ON subquery.receiver = receiver_users.id;
+          `
+          return db
+          .query(queryString, queryParams)
+          .then((response2) => {
+            return [response.rows, response2.rows]
+          })
+      }
+      return [response.rows];
     })
     .catch((error) => {
       console.log(error);
