@@ -101,18 +101,42 @@
   <div class="container mt-5">
   <h2 class="text-center mb-3">MESSAGES</h2>
   <div class="form-group mt-3 mb-3">
+    <select class="list" id="item-select" onchange="submitListForm()">
+      <option value="all">Choose Item</option>
+      <%
+      if (messages.length > 0) {
+        const list = {};
+        for (let i = 0; i < messages.length; i++) {
+          const title = messages[i].title;
+          const listingid = messages[i].listing;
+          if(!list[listingid]) {
+            list[listingid] = title;
+          }
+        }
+
+        for(const el in list) {
+          %>
+          <option class="list" value="<%= el %>">
+            <%= list[el] %>
+          </option>
+            <%
+          }
+        }
+      %>
+    </select>
     <input type="text" id="searchInput" class="form-control" placeholder="Enter search keyword">
     <button type="button" class="btn btn-primary" id="searchBtn">Search</button>
   </div>
-  <% if (messages.length === 0) { %>
+  <% const messageGroups = filteredMessages ? filteredMessages : messages;
+   if (messageGroups.length === 0) { %>
     <p class="text-center">No messages found.</p>
   <% } else { %>
-    <% for (let i = 0; i < messages.length; i++) { %>
-      <div class="card" style="border: 0; border-radius: 10px; background-color: <% if (i % 2 === 0) { %>#f5f5f5<% } else { %>#cbb3de<% } %>" onclick="window.location='/messages/<%= messages[i].listing %>/<%= messages[i].sender %>/<%= messages[i].receiver %>'">
+    <% for (let i = 0; i < messageGroups.length; i++) { %>
+      <div class="card" style="border: 0; border-radius: 10px; background-color: <% if (i % 2 === 0) { %>#f5f5f5<% } else { %>#cbb3de<% } %>" onclick="window.location='/messages/<%= messageGroups[i].listing %>/<%= messageGroups[i].sender %>/<%= messageGroups[i].receiver %>'">
         <div class="card-body">
-          <h5 class="card-title">Item: <%= messages[i].title %></h5>
-          <p class="card-text">Other User: <%= messages[i].receiver_name %></p>
-          <p class="card-text">Number of messages: <%= messages[i].message_count %></p>
+          <h5 class="card-title">Item: <%= messageGroups[i].title %></h5>
+          <p class="card-text">Other User: <%= messageGroups[i].receiver == userId ? messageGroups[i].sender_name : messageGroups[i].receiver_name %></p>
+          <p class="card-text">Number of messages: <%= messageGroups[i].message_count %></p>
         </div>
       </div>
     <% } %>
@@ -120,3 +144,11 @@
 </div>
 <body>
 </html>
+
+
+<!--
+  dropdown button
+
+
+
+ -->

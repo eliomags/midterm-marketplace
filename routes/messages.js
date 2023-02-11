@@ -9,15 +9,21 @@ const {
 // request for viewing messages
 router.get("/", (req, res) => {
   const userId = req.cookies.user_id;
+  const listingId = req.query.listingid;
   let priceRange = {};
   priceRange.min_price = parseInt(req.query.min_price);
   priceRange.max_price = parseInt(req.query.min_price);
   // const listing_id = req.params.listing_id;
 
-  getUserMessages(userId)
-    .then((messages) => {
+  getUserMessages(userId, listingId)
+    .then((responses) => {
+      let messages = responses[0];
+      let filteredMessages = false;
+      if(typeof responses[1] !== 'undefined') {
+        filteredMessages = responses[1];
+      }
       console.log("messages", messages);
-      res.render("messages", { messages: messages, userId, priceRange });
+      res.render("messages", { messages, filteredMessages, userId, priceRange });
     })
     .catch((error) => {
       console.log(error);

@@ -147,3 +147,9 @@ document.querySelector("#searchBtn").addEventListener("click", function () {
     }
   });
 });
+
+function submitListForm() {
+  const select = document.getElementById("item-select");
+  const selectedValue = select.options[select.selectedIndex].value;
+  window.location.href = `/messages?listingid=${selectedValue}`;
+}
